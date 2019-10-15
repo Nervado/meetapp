@@ -36,4 +36,34 @@ describe('Auth', () => {
 
     expect(checkResponse).toBe(401);
   });
+
+  it('it should not be possible acess whith a wrong token', async () => {
+    let user = await factory.attrs('User', { password: '123456' });
+
+    let { email, password } = user;
+
+    await request(app)
+      .post('/users')
+      .send(user);
+
+    let response = await request(app)
+      .post('/sessions')
+      .send({ email, password });
+
+    const { token } = response.body;
+
+    response = await request(app)
+      .put('/users')
+      .set('Authorization', `Bearer ${token}34`)
+      .send({
+        name: 'Fulano',
+        email: 'fulano@fulano.com',
+        oldPassword: '123445',
+        password: '654321',
+        confirmPassword: '654321',
+      });
+
+    expect(response.status).toBe(401);
+    expect(response.text).toContain('Token invalid!');
+  });
 });

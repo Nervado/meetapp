@@ -40,12 +40,12 @@ class UserController {
   }
 
   async update(req, res) {
-    // Schema validation
+    // schema validation
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
       oldPassword: Yup.string().min(6),
-      password: Yup.string(6)
+      password: Yup.string()
         .min(6)
         .when('oldPassword', (oldPassword, field) =>
           oldPassword ? field.required() : field
@@ -56,7 +56,7 @@ class UserController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fail!' });
+      return res.status(400).json({ error: 'Validation fails' });
     }
 
     const { email, oldPassword } = req.body;
@@ -67,6 +67,7 @@ class UserController {
       return res.status(400).json({ error: ' User not found ' });
     }
 
+    // check email
     if (email !== user.email) {
       const userExists = await User.findOne({ where: { email } });
 

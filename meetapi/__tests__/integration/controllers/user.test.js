@@ -60,8 +60,6 @@ describe('User', () => {
       .post('/sessions')
       .send({ email, password });
 
-    console.log(response);
-
     // save token
     const { token } = response.body;
     // put the data
@@ -73,7 +71,8 @@ describe('User', () => {
         email,
         oldPassword: '123456',
         password: '654321',
-        confirmPassword: '645321',
+        confirmPassword: '654321',
+        is_organizer: true,
       });
 
     expect(result.status).toBe(200);
@@ -104,10 +103,40 @@ describe('User', () => {
         email: 'fulano@fulano.com',
         oldPassword: '123456',
         password: '654321',
-        confirmPassword: '645321',
+        confirmPassword: '654321',
       });
 
     expect(response.status).toBe(400);
     expect(response.text).toContain('not found');
+  });
+
+  it('a wrong user password sended should return an error', async () => {
+    let user = await factory.attrs('User', { password: '123456' });
+
+    let { email, password } = user;
+
+    await request(app)
+      .post('/users')
+      .send(user);
+
+    let response = await request(app)
+      .post('/sessions')
+      .send({ email, password });
+
+    const { token } = response.body;
+
+    response = await request(app)
+      .put('/users')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'Fulano',
+        email: 'fulano@fulano.com',
+        oldPassword: '123445',
+        password: '654321',
+        confirmPassword: '654321',
+      });
+
+    expect(response.status).toBe(401);
+    expect(response.text).toContain('Password does not match');
   });
 });
