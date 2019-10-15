@@ -4,7 +4,7 @@ module.exports = {
     node: true,
   },
   extends: ['airbnb-base', 'prettier'],
-  plugins: ['prettier'],
+  plugins: ['prettier', 'jest'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -19,5 +19,11 @@ module.exports = {
     'no-param-reassign': 'off',
     camelcase: 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
+    'jest/no-disabled-tests': 'warn',
+    'jest/no-focused-tests': 'error',
+    'jest/no-identical-title': 'error',
+    'jest/prefer-to-have-length': 'warn',
+    'jest/valid-expect': 'error',
+    'eslint-disable': 'no-undef',
   },
 };

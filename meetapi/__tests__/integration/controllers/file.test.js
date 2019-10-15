@@ -1,8 +1,7 @@
+/* eslint-disable no-undef */
 import request from 'supertest';
-import { fs } from 'mz';
-// const fs = require('mz/fs');
+
 import app from '../../../src/app';
-//import fs from 'fs';
 import factory from '../../factories';
 import truncate from '../../util/truncate';
 
@@ -29,30 +28,30 @@ describe('File', () => {
       .post('/sessions')
       .send({ email, password });
 
-    const token = response.body;
+    const { token } = response.body;
     // post file
     const filePath = `${__dirname}/files/filetest.pdf`;
 
     // Upload first test file to CDN
-    //fs.exists(filePath, exists => {
-    //console.log(filePath);
-    //if (!exists) throw new Error('file does not exist');
-    //});
+    // fs.exists(filePath, exists => {
+    // console.log(filePath);
+    // if (!exists) throw new Error('file does not exist');
+    // });
 
     const result = await request(app)
       .post('/files') // Attach the file with key 'file' which is corresponding to your endpoint setting.
       .set('Authorization', `Bearer ${token}`)
       .attach('file', filePath);
-    //.then(res => {
+    // .then(res => {
     // const { success, message, filePath } = res.body;
     // expect(success).toBeTruthy();
-    //expect(message).toBe('Uploaded successfully');
+    // expect(message).toBe('Uploaded successfully');
     expect(result.status).toBe(200); // store file data for following tests
     //    testFilePath = filePath;
     //    })
-    //.catch(err => console.log(err));
+    // .catch(err => console.log(err));
 
-    //.then(exists => {});
+    // .then(exists => {});
     /*
     const result = await request(app)
       .post('/files')

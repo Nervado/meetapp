@@ -8,7 +8,7 @@ class FileController {
       path,
     });
     // return res.json(file);
-    res.status(200).json({ msg: 'the file has been salved' });
+    return res.status(200).json(file);
   }
 }
 

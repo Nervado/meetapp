@@ -5,13 +5,12 @@ import multerConfig from './config/multer';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
+import MeetsController from './app/controllers/MeetsController';
+import OrganizerController from '.app/controllers/OrganizerController';
+import SubscriberController from '.app/controllers/SubscriberController';
 
-// import ProviderController from './app/controllers/ProviderController';
+
 import auth from './app/middlewares/auth';
-// import AppointmentController from './app/controllers/AppointmentController';
-// import ScheduleController from './app/controllers/ScheduleController';
-// import NotificationController from './app/controllers/NotificationController';
-// import AvailableController from './app/controllers/AvailableController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -24,24 +23,20 @@ routes.post('/sessions', SessionController.store);
 routes.use(auth);
 // Modify user
 routes.put('/users', UserController.update);
-/*
-// List all Providers
-routes.get('/providers', ProviderController.index);
-// List available hours
-routes.get('/providers/:providerId/available', AvailableController.index);
-// Create Appointment
-routes.post('/appointments', AppointmentController.store);
-// List Appointments
-routes.get('/appointments', AppointmentController.index);
-// Delete Appointments
-routes.delete('/appointments/:id', AppointmentController.delete);
-// List Appointments
-routes.get('/schedule', ScheduleController.index);
-// List Notifications
-routes.get('/notifications', NotificationController.index);
-// Read Notifications
-routes.put('/notifications/:id', NotificationController.update);
-*/
+// List meets by date
+routes.get('/meets?date&page',MeetsController.index);
+// Create meet
+routes.post('/meets',OrganizerController.store);
+// Update meet
+route.update('/meets/:id',OrganizerController.update);
+// Delete meet
+route.delete('/meets/:id',OrganizerController.delete);
+// List User's Meets
+route.get('/meets',SubscriberController.index);
+// Create Subscription
+route.post('/meets',SubscriberController.store);
+// Cancel Subscription
+route.delete('/meets/:id', SubscriberController.delete);
 // Store file
 routes.post('/files', upload.single('file'), FileController.store);
 
