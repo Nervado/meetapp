@@ -8,7 +8,7 @@ import factory from '../../factories';
 import truncate from '../../util/truncate';
 
 describe('Auth', () => {
-  //clear database
+  // clear database
   beforeEach(async () => {
     await truncate();
   });
@@ -31,5 +31,14 @@ describe('Auth', () => {
 
     expect(response.text).toContain('token');
     expect(response.status).toBe(200);
+  });
+
+  it('a unknow user should no be able to login', async () => {
+    const { email, password } = await factory.attrs('User');
+    const response = await request(app)
+      .post('/sessions')
+      .send({ email, password });
+    expect(response.status).toBe(401);
+    expect(response.text).toContain('not found');
   });
 });

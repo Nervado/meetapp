@@ -2,10 +2,10 @@ import request from 'supertest';
 import bcrypt from 'bcryptjs';
 import app from '../../../src/app';
 
-// import User from '../../src/app/models/User';
 import factory from '../../factories';
 
 import truncate from '../../util/truncate';
+import { tsConstructSignatureDeclaration } from '@babel/types';
 
 describe('User', () => {
   beforeEach(async () => {
@@ -43,12 +43,46 @@ describe('User', () => {
       .send(user);
 
     expect(response.status).toBe(400);
+    expect(response.text).toContain('error');
   });
 
   it('should be able to change password', async () => {
     // set know password
-    let user = await factory.attrs('User', { password: '123456' });
+    const user = await factory.attrs('User', { password: '123456' });
+
     const { name, email, password } = user;
+
+    await request(app)
+      .post('/users')
+      .send(user);
+
+    const response = await request(app)
+      .post('/sessions')
+      .send({ email, password });
+
+    console.log(response);
+
+    // save token
+    const { token } = response.body;
+    // put the data
+    const result = await request(app)
+      .put('/users')
+      .set('authorization', `Bearer ${token}`)
+      .send({
+        name,
+        email,
+        oldPassword: '123456',
+        password: '654321',
+        confirmPassword: '645321',
+      });
+
+    expect(result.status).toBe(200);
+  });
+
+  it('a unknow user should no be able to update a profile', async () => {
+    let user = await factory.attrs('User', { password: '123456' });
+
+    let { email, password } = user;
 
     await request(app)
       .post('/users')
@@ -58,29 +92,22 @@ describe('User', () => {
       .post('/sessions')
       .send({ email, password });
 
-    // save user_id
     const { token } = response.body;
-    console.log(response.body);
-    // update password
-    user = {
-      name,
-      email,
-      oldPassword: '123456',
-      password: '654321',
-      confirmPassword: '645321',
-      is_organizer: false,
-    };
 
-    console.log(user);
+    await truncate();
 
-    // put the data
-    const result = await request(app)
+    response = await request(app)
       .put('/users')
-      .set({ authorization: `Bearer ${token}` })
-      .send(user);
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'Fulano',
+        email: 'fulano@fulano.com',
+        oldPassword: '123456',
+        password: '654321',
+        confirmPassword: '645321',
+      });
 
-    // expect(response.data).toHaveProperty('id');
-    // expect(response.data.id).toBe(toString(id));
-    expect(result.status).toBe(200);
+    expect(response.status).toBe(400);
+    expect(response.text).toContain('not found');
   });
 });
