@@ -10,6 +10,7 @@ describe('Meet', () => {
 
   // token
   let token = '';
+  let id_user = '';
 
   beforeEach(async () => {
     // clear database
@@ -31,6 +32,7 @@ describe('Meet', () => {
       .send({ email, password });
 
     token = response.body.token;
+    id_user = response.body.id;
   });
 
   it('it should be possible create a new meet', async () => {
@@ -41,18 +43,58 @@ describe('Meet', () => {
       .post('/meets')
       .set('Authorization', `Bearer ${token}`)
       .send(meet);
-    /*
-      .send({
-        description: 'blablabla',
-        title: 'blaaaaaa',
-        local: 'blabla',
-        date: '2019-08-08',
-      });
-*/
-    // console.log(meet);
-    // const { title } = response.text;
 
-    // expect(response.text).toContain(title);
+    expect(response.status).toBe(200);
+  });
+
+  it('it should be possible update a meet', async () => {
+    let meet = await factory.attrs('Meet');
+
+    // create user
+    let response = await request(app)
+      .post('/meets')
+      .set('Authorization', `Bearer ${token}`)
+      .send(meet);
+
+    const { id } = response.body;
+
+    meet = await factory.attrs('Meet');
+
+    response = await request(app)
+      .put(`/meets/${id}`)
+      .set('Authorization', `Bearer ${token}`)
+      .send(meet);
+
+    expect(response.status).toBe(200);
+  });
+
+  it('it should be possible list all created meetups', async () => {
+    // let meet = await factory.attrs('Meet');
+
+    let response = await request(app)
+      .post('/meets')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...(await factory.attrs('Meet')), organizer_id: id_user });
+
+    response = await request(app)
+      .post('/meets')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...(await factory.attrs('Meet')), organizer_id: id_user });
+
+    response = await request(app)
+      .post('/meets')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...(await factory.attrs('Meet')), organizer_id: id_user });
+
+    response = await request(app)
+      .post('/meets')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ ...(await factory.attrs('Meet')), organizer_id: id_user });
+
+    response = await request(app)
+      .get(`/meets`)
+      .set('Authorization', `Bearer ${token}`);
+
     expect(response.status).toBe(200);
   });
 });

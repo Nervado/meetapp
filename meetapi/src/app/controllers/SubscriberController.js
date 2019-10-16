@@ -13,8 +13,15 @@ class SubscriberController {
   }
 
   async index(req, res) {
-    // consulta no banco de dados trazendo todos os meetups por data
-    return res.status(200).json({ msg: 'lista de meetups' });
+    const subscription = await Subscription.findAll({
+      where: { user_id: req.userId },
+    });
+
+    const { date, user_id, meet_id, cancelable, past } = subscription;
+
+    console.log({ date, user_id, meet_id, cancelable, past });
+
+    return res.status(200).json({ date, user_id, meet_id, cancelable, past });
   }
 
   async delete(req, res) {

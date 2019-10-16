@@ -28,7 +28,9 @@ class OrganizerController {
       organizer_id,
       banner_id,
     } = await Meet.create(req.body);
-    console.log({
+    /**
+    *
+    *  console.log({
       id,
       local,
       date,
@@ -37,6 +39,7 @@ class OrganizerController {
       organizer_id,
       banner_id,
     });
+    */
     return res.json({
       id,
       organizer_id,
@@ -49,14 +52,32 @@ class OrganizerController {
   }
 
   async update(req, res) {
-    return res.status(200).json({ msg: 'meetup atualizado' });
+    const { id } = req.params;
+    const meet = await Meet.findByPk(id);
+
+    const response = await meet.update(req.body);
+    // console.log(response);
+
+    return res.status(200).json(response);
   }
 
   async index(req, res) {
-    return res.status(200).json({ msg: 'meetup listado' });
+    const meetups = await Meet.findAll({ where: { organizer_id: req.userId } });
+
+    const { date, description, local, title, banner_id } = meetups;
+
+    // console.log({ date, description, local, title, banner_id });
+
+    return res.status(200).json({ date, description, local, title, banner_id });
   }
 
   async delete(req, res) {
+    const { id } = req.params;
+
+    const response = await Meet.destroy({ where: { id } });
+
+    console.log(response);
+
     return res.status(200).json({ msg: 'meetup cancelado' });
   }
 }

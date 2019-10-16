@@ -26,6 +26,8 @@ routes.put('/users', UserController.update);
 routes.get('/meets?date&page', MeetController.index);
 // Create meet
 routes.post('/meets', OrganizerController.store);
+// List organizer meets
+routes.get('/meets', OrganizerController.index);
 // Update meet
 routes.put('/meets/:id', OrganizerController.update);
 // Delete meet
