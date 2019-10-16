@@ -17,7 +17,7 @@ class Subscription extends Model {
         cancelable: {
           type: Sequelize.VIRTUAL,
           get() {
-            return isBefore(new Date(), subHours(this.date, 6));
+            return isBefore(new Date(), subHours(this.date, 3));
           },
         },
       },

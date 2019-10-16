@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import request from 'supertest';
 // import bcrypt from 'bcryptjs';
 import app from '../../../src/app';

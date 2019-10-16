@@ -5,9 +5,11 @@ class SubscriberController {
   async store(req, res) {
     const { id } = await Subscription.create({ date: new Date() });
 
-    const subscription = await Subscription.findByPk(id);
+    const { date, cancelable, past } = await Subscription.findByPk(id);
 
-    return res.status(200).json({ subscription });
+    console.log({ date, cancelable, past });
+
+    return res.status(200).json({ date, cancelable, past });
   }
 
   async index(req, res) {
