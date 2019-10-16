@@ -5,7 +5,6 @@ import app from '../../../src/app';
 import factory from '../../factories';
 
 import truncate from '../../util/truncate';
-import { tsConstructSignatureDeclaration } from '@babel/types';
 
 describe('User', () => {
   beforeEach(async () => {

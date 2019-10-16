@@ -1,19 +1,19 @@
 import request from 'supertest';
-// import bcrypt from 'bcryptjs';
+
 import app from '../../../src/app';
-
-// import User from '../../src/app/models/User';
 import factory from '../../factories';
-
 import truncate from '../../util/truncate';
 
-describe('Auth', () => {
+describe('Meet', () => {
   // clear database
-  beforeEach(async () => {
-    await truncate();
-  });
 
-  it('it should be possible creat a meetup', async () => {
+  // token
+  let token = '';
+
+  beforeEach(async () => {
+    // clear database
+    await truncate();
+    // login
     const user = await factory.attrs('User');
 
     // save email and password
@@ -25,11 +25,23 @@ describe('Auth', () => {
       .send(user);
 
     // try acess the app
-    const response = await request(app)
+    let response = await request(app)
       .post('/sessions')
       .send({ email, password });
 
-    expect(response.text).toContain('token');
+    token = response.body.token;
+  });
+
+  it('it should be possible create a new meet', async () => {
+    const meet = await factory.attrs('Meet');
+
+    // create user
+    const response = await request(app)
+      .post('/meets')
+      .set('Authorization', `Bearer ${token}`)
+      .send(meet);
+
+    // expect(response.text).toContain('token');
     expect(response.status).toBe(200);
   });
 });

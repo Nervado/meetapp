@@ -30,7 +30,7 @@ module.exports = {
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNUll: false,
+        allowNUll: true,
       },
       banner_id: {
         type: Sequelize.INTEGER,
@@ -41,6 +41,7 @@ module.exports = {
       },
       canceled_at: {
         type: Sequelize.DATE,
+        allowNUll: true,
       },
       created_at: {
         type: Sequelize.DATE,

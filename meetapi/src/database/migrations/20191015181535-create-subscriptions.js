@@ -14,14 +14,14 @@ module.exports = {
         references: { model: 'meets', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNUll: false,
+        allowNUll: true,
       },
       user_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'user', key: 'id' },
+        references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNUll: false,
+        allowNUll: true,
       },
       canceled_at: {
         type: Sequelize.DATE,
