@@ -18,17 +18,44 @@ class OrganizerController {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fail!' });
-    }*/
-    const meet = await Meet.create(req.body);
-    ///console.log(meet);
-    return res.status(200).json(meet);
+    } */
+    const {
+      id,
+      local,
+      date,
+      title,
+      description,
+      organizer_id,
+      banner_id,
+    } = await Meet.create(req.body);
+    console.log({
+      id,
+      local,
+      date,
+      title,
+      description,
+      organizer_id,
+      banner_id,
+    });
+    return res.json({
+      id,
+      organizer_id,
+      banner_id,
+      local,
+      date,
+      title,
+      description,
+    });
   }
+
   async update(req, res) {
     return res.status(200).json({ msg: 'meetup atualizado' });
   }
+
   async index(req, res) {
     return res.status(200).json({ msg: 'meetup listado' });
   }
+
   async delete(req, res) {
     return res.status(200).json({ msg: 'meetup cancelado' });
   }

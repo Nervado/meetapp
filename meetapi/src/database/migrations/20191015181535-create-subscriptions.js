@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('subscriptions', {
@@ -8,6 +6,10 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
+      },
+      date: {
+        type: Sequelize.DATE,
+        allowNUll: false,
       },
       meet_id: {
         type: Sequelize.INTEGER,
@@ -25,6 +27,7 @@ module.exports = {
       },
       canceled_at: {
         type: Sequelize.DATE,
+        allowNUll: true,
       },
       created_at: {
         type: Sequelize.DATE,

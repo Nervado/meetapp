@@ -1,10 +1,11 @@
+/* eslint-disable no-undef */
 import request from 'supertest';
 
 import app from '../../../src/app';
 import factory from '../../factories';
 import truncate from '../../util/truncate';
 
-describe('Subscriber', () => {
+describe('Subscription', () => {
   // clear database
 
   // token
@@ -25,7 +26,7 @@ describe('Subscriber', () => {
       .send(user);
 
     // try acess the app
-    let response = await request(app)
+    const response = await request(app)
       .post('/sessions')
       .send({ email, password });
 
@@ -33,11 +34,14 @@ describe('Subscriber', () => {
   });
 
   it('it should be possible create a new subscription', async () => {
+    const subscription = await factory.attrs('Subscription');
     // create user
     const response = await request(app)
       .post('/subscriptions')
       .set('Authorization', `Bearer ${token}`)
-      .send({ user_id: 1, meet_id: 1 });
+      .send(subscription);
+
+    // console.log(subscription);
 
     expect(response.status).toBe(200);
   });

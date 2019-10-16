@@ -3,6 +3,7 @@ import { factory } from 'factory-girl';
 
 import User from '../src/app/models/User';
 import Meet from '../src/app/models/Meet';
+import Subscription from '../src/app/models/Subscription';
 
 factory.define('User', User, {
   name: faker.name.findName(),
@@ -13,11 +14,13 @@ factory.define('User', User, {
 
 factory.define('Meet', Meet, {
   title: faker.lorem.words(4),
-  local: faker.address.city('Rio de Janeiro'),
-  date: faker.date.future(0.5),
-  organizer_id: 1,
-  banner_id: 1,
-  // banner: faker.image.business(200, 200),
+  local: faker.address.streetAddress(),
+  description: faker.lorem.words(100),
+  date: faker.date.future(),
+});
+
+factory.define('Subscription', Subscription, {
+  date: faker.date.future(),
 });
 
 export default factory;

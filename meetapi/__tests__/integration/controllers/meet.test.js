@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import request from 'supertest';
 
 import app from '../../../src/app';
@@ -25,7 +26,7 @@ describe('Meet', () => {
       .send(user);
 
     // try acess the app
-    let response = await request(app)
+    const response = await request(app)
       .post('/sessions')
       .send({ email, password });
 
@@ -40,9 +41,18 @@ describe('Meet', () => {
       .post('/meets')
       .set('Authorization', `Bearer ${token}`)
       .send(meet);
+    /*
+      .send({
+        description: 'blablabla',
+        title: 'blaaaaaa',
+        local: 'blabla',
+        date: '2019-08-08',
+      });
+*/
+    // console.log(meet);
+    // const { title } = response.text;
 
-    console.log(meet);
-    expect(response.text).toContain('title');
+    // expect(response.text).toContain(title);
     expect(response.status).toBe(200);
   });
 });

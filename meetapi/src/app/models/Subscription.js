@@ -7,7 +7,7 @@ class Subscription extends Model {
       {
         user_id: Sequelize.INTEGER,
         meet_id: Sequelize.INTEGER,
-        canceled_at: Sequelize.DATE,
+        date: Sequelize.DATE,
         past: {
           type: Sequelize.VIRTUAL,
           get() {
@@ -17,7 +17,7 @@ class Subscription extends Model {
         cancelable: {
           type: Sequelize.VIRTUAL,
           get() {
-            return isBefore(new Date(), subHours(this.date, 2));
+            return isBefore(new Date(), subHours(this.date, 6));
           },
         },
       },
