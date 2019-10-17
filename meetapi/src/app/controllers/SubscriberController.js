@@ -13,8 +13,6 @@ class SubscriberController {
       res.status(400).json({ error: 'Meetup não existe' });
     }
 
-    console.log(startOfHour(meet.date));
-
     // O usuário deve poder se inscrever em meetups que não organiza.
     if (req.userId === (await Meet.findByPk(req.params.id)).organizer_id) {
       res.status(400).json({ error: 'usuário é organizador deste meetup' });
@@ -71,8 +69,6 @@ Liste apenas meetups que ainda não passaram e ordene meetups mais próximos com
 
     const { date, user_id, meet_id, cancelable, past } = subscription;
 
-    console.log({ date, user_id, meet_id, cancelable, past });
-
     return res.status(200).json({ date, user_id, meet_id, cancelable, past });
   }
 
@@ -81,8 +77,6 @@ Liste apenas meetups que ainda não passaram e ordene meetups mais próximos com
     // check if the subscription belongs to loged user
 
     const response = await Subscription.destroy({ where: { id } });
-
-    console.log(response);
 
     return res.status(200).json({ msg: 'inscricao cancelada' });
   }
