@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { isBefore, parseISO } from 'date-fns';
 
 import Meet from '../models/Meet';
 import File from '../models/File';
@@ -6,7 +7,6 @@ import File from '../models/File';
 class OrganizerController {
   async store(req, res) {
     // Schema validation
-
     const schema = Yup.object().shape({
       title: Yup.string()
         .required()
@@ -23,16 +23,30 @@ class OrganizerController {
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fail!' });
     }
+    // check data avaibility
+    const dateChecked = parseISO(req.body.date);
+
+    if (isBefore(parseISO(req.body.date), new Date())) {
+      return res
+        .status(400)
+        .json({ error: 'Não é possível criar um evento no passado' });
+    }
 
     const {
       id,
       local,
-      date,
       title,
+      date,
       description,
       organizer_id,
       banner_id,
-    } = await Meet.create({ ...req.body, organizer_id: req.userId });
+      cancelable,
+      past,
+    } = await Meet.create({
+      ...req.body,
+      date: dateChecked,
+      organizer_id: req.userId,
+    });
 
     return res.json({
       id,
@@ -42,6 +56,8 @@ class OrganizerController {
       date,
       title,
       description,
+      cancelable,
+      past,
     });
   }
 
@@ -71,6 +87,12 @@ class OrganizerController {
       return res.status(400).json({ error: 'Meetup não existe' });
     }
 
+    if (!meet.past) {
+      return res
+        .status(400)
+        .json({ error: 'Meetup não pode mais ser editado.' });
+    }
+
     const { organizer_id } = meet;
 
     if (req.userId !== organizer_id) {
@@ -95,7 +117,6 @@ class OrganizerController {
   }
 
   async delete(req, res) {
-    // check if the loged user is organizer
     const { id } = req.params;
     const meet = await Meet.findByPk(id);
 
@@ -108,6 +129,12 @@ class OrganizerController {
       return res
         .status(401)
         .json({ error: 'Usuário não é o organizador do evento' });
+    }
+
+    if (meet.cancelable) {
+      return res
+        .status(400)
+        .json({ error: 'O meetup não pode mais ser cancelado' });
     }
 
     // remove meetup from database

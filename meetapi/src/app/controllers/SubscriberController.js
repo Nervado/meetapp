@@ -1,3 +1,4 @@
+import { startOfHour } from 'date-fns';
 import Subscription from '../models/Subscription';
 import Meet from '../models/Meet';
 
@@ -7,6 +8,12 @@ class SubscriberController {
     const { id } = req.params;
 
     const meet = await Meet.findByPk(id);
+
+    if (!meet) {
+      res.status(400).json({ error: 'Meetup não existe' });
+    }
+
+    console.log(startOfHour(meet.date));
 
     // O usuário deve poder se inscrever em meetups que não organiza.
     if (req.userId === (await Meet.findByPk(req.params.id)).organizer_id) {
@@ -20,7 +27,7 @@ class SubscriberController {
 
     // O usuário não pode se inscrever no mesmo meetup duas vezes.
     const existSubscription = await Subscription.findOne({
-      where: { user_id: req.userId },
+      where: { user_id: req.userId, meet_id: id },
     });
 
     if (existSubscription) {
@@ -29,7 +36,7 @@ class SubscriberController {
 
     // O usuário não pode se inscrever em dois meetups que acontecem no mesmo horário.
     const isUnavailable = await Subscription.findOne({
-      where: { date: meet.date },
+      where: { date: startOfHour(meet.date), user_id: req.userId },
     });
 
     if (isUnavailable) {
@@ -39,7 +46,7 @@ class SubscriberController {
     }
     const { date, user_id, meet_id } = await Subscription.create({
       date: meet.date,
-      meet_id: meet.meet_id,
+      meet_id: id,
       user_id: req.userId,
     });
 
@@ -52,7 +59,7 @@ class SubscriberController {
     /**
      * ### Listagem de inscrições
 
-Crie uma rota para listar os meetups em que o usuário logado está inscrito.
+  Crie uma rota para listar os meetups em que o usuário logado está inscrito.
 
 Liste apenas meetups que ainda não passaram e ordene meetups mais próximos como primeiros da lista.
      */
