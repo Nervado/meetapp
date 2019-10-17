@@ -1,4 +1,5 @@
-import { setHours, setMinutes, setSeconds } from 'date-fns';
+import { startOfDay, endOfDay, parseISO } from 'date-fns';
+import { Op } from 'sequelize';
 
 import Meet from '../models/Meet';
 import User from '../models/User';
@@ -7,21 +8,18 @@ import File from '../models/File';
 class MeetController {
   async index(req, res) {
     const { page = 1 } = req.query;
-    const {
-      date = setHours(0, setMinutes(0, setSeconds(0, new Date()))),
-    } = req.query;
+    const { date } = req.query;
+    const searchDate = parseISO(date);
 
-    const [beginDate, endDate] = [
-      setHours(0, setMinutes(0, setSeconds(0, date))),
-      setHours(24, setMinutes(0, setSeconds(0, date))),
-    ];
+    if (!date) {
+      return res.status(400).json({ error: 'Invalid date' });
+    }
 
     const meets = await Meet.findAll({
       where: {
-        past: false,
         canceled_at: null,
         date: {
-          $between: [beginDate, endDate],
+          [Op.between]: [startOfDay(searchDate), endOfDay(searchDate)],
         },
       },
       order: ['date'],
@@ -42,7 +40,7 @@ class MeetController {
       ],
     });
 
-    return res.status(200).json(meets);
+    return res.json(meets);
   }
 }
 

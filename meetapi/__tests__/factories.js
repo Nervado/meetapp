@@ -16,11 +16,13 @@ factory.define('Meet', Meet, {
   title: faker.lorem.words(4),
   local: faker.address.streetAddress(),
   description: faker.lorem.words(100),
-  date: faker.date.future(),
+  // date: faker.date.future(),
+  date: '2019-10-18',
 });
 
 factory.define('Subscription', Subscription, {
-  date: faker.date.future(),
+  // date: faker.date.future(),
+  date: '2019-10-18',
 });
 
 export default factory;
