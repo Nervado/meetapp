@@ -95,6 +95,10 @@ describe('Meet', () => {
       .get(`/meets`)
       .set('Authorization', `Bearer ${token}`);
 
+    response = await request(app)
+      .get(`/meets?date=${(await factory.attrs('Meet')).date}&page=1`)
+      .set('Authorization', `Bearer ${token}`);
+    console.log(response.body);
     expect(response.status).toBe(200);
   });
 });
