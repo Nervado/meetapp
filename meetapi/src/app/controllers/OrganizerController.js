@@ -46,11 +46,40 @@ class OrganizerController {
   }
 
   async update(req, res) {
+    const schema = Yup.object().shape({
+      title: Yup.string()
+        .required()
+        .max(150),
+      description: Yup.string()
+        .required()
+        .max(500),
+      local: Yup.string()
+        .required()
+        .max(150),
+      date: Yup.date().required(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fail!' });
+    }
+
     const { id } = req.params;
-    const meet = await Meet.findByPk(id);
+
+    const meet = await Meet.findOne({ where: { id } });
+
+    if (!meet) {
+      return res.status(400).json({ error: 'Meetup não existe' });
+    }
+
+    const { organizer_id } = meet;
+
+    if (req.userId !== organizer_id) {
+      return res
+        .status(401)
+        .json({ error: 'Usuário não é o organizador do evento' });
+    }
 
     const response = await meet.update(req.body);
-    // console.log(response);
 
     return res.status(200).json(response);
   }
@@ -68,7 +97,12 @@ class OrganizerController {
   async delete(req, res) {
     // check if the loged user is organizer
     const { id } = req.params;
-    const { organizer_id } = await Meet.findByPk(id);
+    const meet = await Meet.findByPk(id);
+
+    if (!meet) {
+      return res.status(400).json({ error: 'Meetup não existe' });
+    }
+    const { organizer_id } = meet;
 
     if (req.userId !== organizer_id) {
       return res
