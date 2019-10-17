@@ -23,7 +23,7 @@ routes.use(auth);
 // Modify user
 routes.put('/users', UserController.update);
 // List meets by date
-routes.get('/meets?date&page', MeetController.index);
+routes.get('/meetups', MeetController.index);
 // Create meet
 routes.post('/meets', OrganizerController.store);
 // List organizer meets
@@ -33,7 +33,7 @@ routes.put('/meets/:id', OrganizerController.update);
 // Delete meet
 routes.delete('/meets/:id', OrganizerController.delete);
 // Create Subscription
-routes.post('/subscriptions', SubscriberController.store);
+routes.post('/subscriptions/:id', SubscriberController.store);
 // List User's Meets
 routes.get('/subscriptions', SubscriberController.index);
 // Cancel Subscription

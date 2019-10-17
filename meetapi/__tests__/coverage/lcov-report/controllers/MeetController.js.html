@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">52.63% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>10/15</span>
+        <span class='fraction'>10/19</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>3/6</span>
+        <span class='fraction'>3/5</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">35.71% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>5/10</span>
+        <span class='fraction'>5/14</span>
       </div>
     </div>
     <p class="quiet">
@@ -95,7 +95,24 @@
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">18x</span>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
@@ -104,8 +121,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -115,6 +132,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -140,6 +170,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -153,23 +187,36 @@ import File from '../models/File';
 class MeetController {
 <span class="fstat-no" title="function not covered" >  as</span>ync index(req, res) {
     const { page = <span class="branch-0 cbranch-no" title="branch not covered" >1 </span>} = <span class="cstat-no" title="statement not covered" >req.query;</span>
-    const {
-      date = <span class="branch-0 cbranch-no" title="branch not covered" >setHours(0, setMinutes(0, setSeconds(0, new Date()))),</span>
-    } = <span class="cstat-no" title="statement not covered" >req.query;</span>
-&nbsp;
+    const { date } = <span class="cstat-no" title="statement not covered" >req.query;</span>
+<span class="cstat-no" title="statement not covered" >    console.log(req.query);</span>
+<span class="cstat-no" title="statement not covered" >    console.log({ date });</span>
+    // = setHours(0, setMinutes(0, setSeconds(0, new Date())))
     const [beginDate, endDate] = <span class="cstat-no" title="statement not covered" >[</span>
       setHours(0, setMinutes(0, setSeconds(0, date))),
       setHours(24, setMinutes(0, setSeconds(0, date))),
     ];
 &nbsp;
-    const meets = <span class="cstat-no" title="statement not covered" >await Meet.findAll({</span>
+    const meets = <span class="cstat-no" title="statement not covered" >await Meet.findAll({ where: { past: false } });</span>
+&nbsp;
+    const { past, cancelable, date: data, local, title, description } = <span class="cstat-no" title="statement not covered" >meets;</span>
+    /*
       where: {
         past: false,
         canceled_at: null,
-        date: {
-          $between: [beginDate, endDate],
-        },
+        date: { $between: [beginDate, endDate] },
+        order: ['date'],
+        attributes: [
+          'id',
+          'date',
+          'description',
+          'local',
+          'past',
+          'cancelable',
+        ],
       },
+    });
+&nbsp;
+    /*
       order: ['date'],
       attributes: ['id', 'date', 'description', 'local', 'past', 'cancelable'],
       limit: 10,
@@ -187,8 +234,12 @@ class MeetController {
         },
       ],
     });
+    */
+<span class="cstat-no" title="statement not covered" >    console.log({ past, cancelable, data, local, title, description });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return res.status(200).json(meets);</span>
+<span class="cstat-no" title="statement not covered" >    return res</span>
+      .status(200)
+      .json({ past, cancelable, data, local, title, description });
   }
 }
 &nbsp;
@@ -199,7 +250,11 @@ export default new MeetController();
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
+<<<<<<< HEAD
   generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Oct 17 2019 06:46:51 GMT-0300 (GMT-03:00)
+=======
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Oct 17 2019 10:03:22 GMT-0300 (Brasilia Standard Time)
+>>>>>>> d6201e75b82227236cc489f9f361aeb36258ac63
 </div>
 </div>
 <script src="../prettify.js"></script>

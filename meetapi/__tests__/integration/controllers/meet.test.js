@@ -92,13 +92,10 @@ describe('Meet', () => {
       .send({ ...(await factory.attrs('Meet')), organizer_id: id_user });
 
     response = await request(app)
-      .get(`/meets`)
+      .get(`/meets?date=2019-10-18&page=1`)
       .set('Authorization', `Bearer ${token}`);
-
-    response = await request(app)
-      .get(`/meets?date=${(await factory.attrs('Meet')).date}&page=1`)
-      .set('Authorization', `Bearer ${token}`);
-    console.log(response.body);
+    // http://localhost:3333/meetups?date=2019-07-01&page=2
+    console.log(response.data);
     expect(response.status).toBe(200);
   });
 });
