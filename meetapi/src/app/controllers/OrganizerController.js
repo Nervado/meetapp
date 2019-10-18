@@ -3,6 +3,7 @@ import { isBefore, parseISO } from 'date-fns';
 
 import Meet from '../models/Meet';
 import File from '../models/File';
+import User from '../models/User';
 
 class OrganizerController {
   async store(req, res) {
@@ -87,7 +88,7 @@ class OrganizerController {
       return res.status(400).json({ error: 'Meetup não existe' });
     }
 
-    if (!meet.past) {
+    if (meet.past) {
       return res
         .status(400)
         .json({ error: 'Meetup não pode mais ser editado.' });
@@ -110,7 +111,19 @@ class OrganizerController {
     const meetups = await Meet.findAll({
       where: { organizer_id: req.userId },
       order: ['date'],
-      attributes: ['id', 'date', 'past', 'cancelable'],
+      attributes: ['id', 'date', 'description', 'local', 'past', 'cancelable'],
+      include: [
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['id', 'name', 'url'],
+        },
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email'],
+        },
+      ],
     });
 
     return res.json(meetups);
@@ -131,7 +144,7 @@ class OrganizerController {
         .json({ error: 'Usuário não é o organizador do evento' });
     }
 
-    if (meet.cancelable) {
+    if (!meet.cancelable) {
       return res
         .status(400)
         .json({ error: 'O meetup não pode mais ser cancelado' });

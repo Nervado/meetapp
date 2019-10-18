@@ -2,26 +2,37 @@ import { Op } from 'sequelize';
 import { startOfHour } from 'date-fns';
 import Subscription from '../models/Subscription';
 import Meet from '../models/Meet';
+import User from '../models/User';
+import File from '../models/File';
+
+import CancellationMail from '../jobs/CancellationMail';
+import SubscriptionMail from '../jobs/SubscriptionMail';
+
+import Queue from '../../libs/Queue';
 
 class SubscriberController {
   async store(req, res) {
     // id from requested meetup subscription
     const { id } = req.params;
 
-    const meet = await Meet.findByPk(id);
+    const meetup = await Meet.findByPk(id);
 
-    if (!meet) {
-      res.status(400).json({ error: 'Meetup não existe' });
+    if (!meetup) {
+      return res.status(400).json({ error: 'Meetup não existe' });
     }
 
     // O usuário deve poder se inscrever em meetups que não organiza.
-    if (req.userId === (await Meet.findByPk(req.params.id)).organizer_id) {
-      res.status(400).json({ error: 'usuário é organizador deste meetup' });
+    if (req.userId === meetup.organizer_id) {
+      return res
+        .status(400)
+        .json({ error: 'usuário é organizador deste meetup' });
     }
 
     // O usuário não pode se inscrever em meetups que já aconteceram.
-    if (meet.past) {
-      res.status(400).json({ error: 'meetup com inscrições encerradas' });
+    if (meetup.past) {
+      return res
+        .status(400)
+        .json({ error: 'meetup com inscrições encerradas' });
     }
 
     // O usuário não pode se inscrever no mesmo meetup duas vezes.
@@ -30,38 +41,45 @@ class SubscriberController {
     });
 
     if (existSubscription) {
-      res.status(400).json({ error: 'Usuário já inscrito' });
+      return res.status(400).json({ error: 'Usuário já inscrito' });
     }
 
     // O usuário não pode se inscrever em dois meetups que acontecem no mesmo horário.
     const isUnavailable = await Subscription.findOne({
-      where: { date: startOfHour(meet.date), user_id: req.userId },
+      where: { date: startOfHour(meetup.date), user_id: req.userId },
     });
 
     if (isUnavailable) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Usuário já está inscrito em outro meetup neste mesmo horário',
       });
     }
-    const { date, user_id, meet_id } = await Subscription.create({
-      date: meet.date,
+    const subscription = await Subscription.create({
+      date: meetup.date,
       meet_id: id,
       user_id: req.userId,
     });
 
+    const organizer = await User.findByPk(meetup.organizer_id);
+
+    const subscriber = { name: req.userName, email: req.userEmail };
+
     // Sempre que um usuário se inscrever no meetup, envie um e-mail ao organizador contendo os dados relacionados ao usuário inscrito. O template do e-mail fica por sua conta :)
-    // TO DO
-    return res.status(200).json({ date, user_id, meet_id });
+    await Queue.add(SubscriptionMail.key, {
+      subscription: { meetup, organizer, subscriber },
+    });
+
+    return res.status(200).json(subscription);
   }
 
   async index(req, res) {
     /**  Crie uma rota para listar os meetups em que o usuário logado está inscrito.
      **  Liste apenas meetups que ainda não passaram e ordene meetups mais próximos como primeiros da lista.
-     **/
+     * */
 
     const subscriptions = await Subscription.findAll({
       where: { user_id: req.userId },
-      order: 'date',
+      order: ['date'],
       date: {
         [Op.gt]: [new Date()],
       },
@@ -77,7 +95,7 @@ class SubscriberController {
               attributes: ['id', 'name'],
             },
             {
-              Model: User,
+              model: User,
               as: 'user',
               attributes: ['id', 'name', 'email'],
             },
@@ -105,13 +123,36 @@ class SubscriberController {
         .json({ error: 'Inscrição não pertence ao usuário logado' });
     }
 
-    try {
-      await Subscription.destroy({ where: { id } });
+    // check if is meetup is past
+    const meetup = await Meet.findByPk(subscription.meet_id, {
+      include: {
+        model: User,
+        as: 'user',
+        attributes: ['name', 'email'],
+      },
+    });
 
-      return res.status(200).json({ msg: 'Inscricao cancelada' });
-    } catch (error) {
-      return res.status(500);
+    if (meetup && meetup.past) {
+      return res
+        .status(400)
+        .json({ error: 'A inscrição não pode mais ser cancelada.' });
     }
+
+    await Subscription.destroy({ where: { id } });
+    // console.log(CancellationMail.key);
+    // subscription
+    await Queue.add(CancellationMail.key, {
+      subscription: {
+        meetup,
+        organizer: meetup.user,
+        subscriber: {
+          email: req.userEmail,
+          name: req.userName,
+        },
+      },
+    });
+
+    return res.status(200).json({ msg: 'Inscricao cancelada' });
   }
 }
 
