@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { startOfHour } from 'date-fns';
 import Subscription from '../models/Subscription';
 import Meet from '../models/Meet';
@@ -54,31 +55,63 @@ class SubscriberController {
   }
 
   async index(req, res) {
-    /**
-     * ### Listagem de inscrições
+    /**  Crie uma rota para listar os meetups em que o usuário logado está inscrito.
+     **  Liste apenas meetups que ainda não passaram e ordene meetups mais próximos como primeiros da lista.
+     **/
 
-  Crie uma rota para listar os meetups em que o usuário logado está inscrito.
-
-Liste apenas meetups que ainda não passaram e ordene meetups mais próximos como primeiros da lista.
-     */
-
-    const subscription = await Subscription.findAll({
+    const subscriptions = await Subscription.findAll({
       where: { user_id: req.userId },
       order: 'date',
+      date: {
+        [Op.gt]: [new Date()],
+      },
+      include: [
+        {
+          model: Meet,
+          as: 'meet',
+          attributes: ['id', 'date', 'local', 'title', 'description'],
+          include: [
+            {
+              model: File,
+              as: 'banner',
+              attributes: ['id', 'name'],
+            },
+            {
+              Model: User,
+              as: 'user',
+              attributes: ['id', 'name', 'email'],
+            },
+          ],
+        },
+      ],
     });
 
-    const { date, user_id, meet_id, cancelable, past } = subscription;
-
-    return res.status(200).json({ date, user_id, meet_id, cancelable, past });
+    return res.status(200).json(subscriptions);
   }
 
   async delete(req, res) {
     const { id } = req.params;
+    // check if subscription exists
+    const subscription = await Subscription.findByPk(id);
+
+    if (!subscription) {
+      return res.status(400).json({ error: 'Inscrição não existe!' });
+    }
+
     // check if the subscription belongs to loged user
+    if (req.userId !== subscription.user_id) {
+      return res
+        .status(400)
+        .json({ error: 'Inscrição não pertence ao usuário logado' });
+    }
 
-    const response = await Subscription.destroy({ where: { id } });
+    try {
+      await Subscription.destroy({ where: { id } });
 
-    return res.status(200).json({ msg: 'inscricao cancelada' });
+      return res.status(200).json({ msg: 'Inscricao cancelada' });
+    } catch (error) {
+      return res.status(500);
+    }
   }
 }
 

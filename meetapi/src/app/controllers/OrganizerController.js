@@ -138,19 +138,22 @@ class OrganizerController {
     }
 
     // remove meetup from database
-    await Meet.destroy(
-      { where: { id } },
-      {
-        include: [
-          {
-            model: File,
-            as: 'banner',
-          },
-        ],
-      }
-    );
-
-    return res.status(200).json({ msg: 'meetup cancelado' });
+    try {
+      await Meet.destroy(
+        { where: { id } },
+        {
+          include: [
+            {
+              model: File,
+              as: 'banner',
+            },
+          ],
+        }
+      );
+      return res.status(200).json({ msg: 'meetup cancelado' });
+    } catch (error) {
+      return res.status(500);
+    }
   }
 }
 
