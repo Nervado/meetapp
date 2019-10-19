@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="49px" height="50px" viewBox="0 0 49 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>M</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-3.8%" y="-3.9%" width="107.6%" height="107.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Meetapp-Web" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="SignIn" transform="translate(-696.000000, -357.000000)" fill="#F94D6A">
+            <g id="Group-5" filter="url(#filter-1)" transform="translate(563.000000, 359.000000)">
+                <polygon id="M" points="172.142857 0 178 0 178 42 171.670507 42 171.670507 9.31997137 158.1298 25.5547602 156.96467 25.5547602 143.298003 9.31997137 143.298003 42 137 42 137 0 142.920123 0 157.56298 17.2569792"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

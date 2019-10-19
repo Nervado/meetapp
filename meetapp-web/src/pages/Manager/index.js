@@ -3,5 +3,5 @@ import React from 'react';
 // import { Container } from './styles';
 
 export default function Manager() {
-  return <div />;
+  return <div>Manager</div>;
 }
