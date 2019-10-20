@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   height: 92px;
   background: rgb(0, 0, 0, 0.3);
   padding: 0 30px;
+  font-family: Helvetica, sans-serif;
 `;
 
 export const Content = styled.div`
@@ -16,12 +18,8 @@ export const Content = styled.div`
   nav {
     display: flex;
     align-items: center;
-    height: 100%;
     img {
-      width: 33%;
-      height: 32%;
-      margin-right: 20px;
-      padding-right: 20px;
+      height: 32px;
     }
   }
   aside {
@@ -34,15 +32,16 @@ export const Profile = styled.div`
   display: flex;
   margin-left: 20px;
   padding-left: 20px;
-  border-left: 1px solid #eee;
+  align-items: center;
 
   div {
     text-align: right;
     margin-right: 10px;
+    font-size: 14px;
 
     strong {
       display: block;
-      color: #333;
+      color: #fff;
     }
 
     a {
@@ -53,9 +52,20 @@ export const Profile = styled.div`
     }
   }
 
-  img {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
+  button {
+    margin-left: 20px;
+    height: 41px;
+    width: 72px;
+    background: #d44059;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: ${darken(0.03, '#d44059')};
+    }
   }
 `;

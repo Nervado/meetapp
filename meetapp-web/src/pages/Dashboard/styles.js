@@ -1,53 +1,87 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
-  max-width: 600px;
-  margin: 50px auto;
+  font-family: Helvetica, sans-serif;
+
+  max-width: 900px;
+  margin: 0 auto;
 
   display: flex;
   flex-direction: column;
 
   header {
+    height: 142px;
+    max-width: 100%;
     display: flex;
-    align-self: center;
     align-items: center;
 
-    button {
-      border: 0;
-      background: none;
-    }
+    justify-content: space-between;
+
     strong {
       color: #fff;
-      font-size: 24px;
-      margin: 0 15px;
+
+      font-size: 32px;
+      font-family: Helvetica, sans-serif;
+    }
+
+    button {
+      width: 172px;
+      height: 42px;
+
+      display: flex;
+      align-items: center;
+      border: 0;
+
+      background: #f94d6a;
+      padding-left: 20px;
+
+      border-radius: 4px;
+      transition: background 0.2s;
+
+      &:hover {
+        background: ${darken(0.03, '#f94d6a')};
+      }
+      strong {
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+        margin-left: 10px;
+      }
     }
   }
 
   ul {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 15px;
-    margin-top: 30px;
+    max-width: 100%;
   }
 `;
 
-export const Time = styled.li`
-  padding: 20px;
+export const Meetup = styled.li`
+  height: 62px;
+  width: 100%;
   border-radius: 4px;
-  background: #fff;
-
-  opacity: ${props => (props.past ? 0.6 : 1)};
+  margin-bottom: 10px;
+  background: rgb(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
   strong {
-    display: block;
-    color: ${props => (props.available ? '#999' : '#7159c1')};
-    font-size: 20px;
-    font-weight: normal;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 30px;
   }
 
-  span {
-    display: block;
-    margin-top: 3px;
-    color: ${props => (props.available ? '#999' : '#666')};
+  div {
+    display: flex;
+    align-items: center;
+    text-align: right;
+    margin-right: 20px;
+
+    strong {
+      opacity: 0.6;
+      margin-right: 30px;
+    }
   }
 `;

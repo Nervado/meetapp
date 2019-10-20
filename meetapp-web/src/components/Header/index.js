@@ -7,7 +7,7 @@ import logo from '~/assets/logo.svg';
 
 // import Notifications from '~/components/Notifications';
 
-import { Container, Content, Profile, Button } from './styles';
+import { Container, Content, Profile } from './styles';
 
 export default function Header() {
   const profile = useSelector(state => state.user.profile);

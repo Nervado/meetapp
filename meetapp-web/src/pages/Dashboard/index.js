@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { Link } from 'react-router-dom';
 import {
-  format,
-  subDays,
   addDays,
   setHours,
   setMinutes,
@@ -12,17 +12,17 @@ import {
 } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 
-import pt from 'date-fns/locale/pt';
+// import pt from 'date-fns/locale/pt';
 
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import { MdAddCircleOutline, MdChevronRight } from 'react-icons/md';
 import api from '~/services/api';
 
-import { Container, Time } from './styles';
+import { Container, Meetup } from './styles';
 
 const range = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 
 export default function Dashboard() {
-  const [schedule, setSchedule] = useState([]);
+  const [, setSchedule] = useState([]);
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
@@ -49,15 +49,6 @@ export default function Dashboard() {
     loadSchedule();
   }, [date]);
 
-  const dateFormatted = useMemo(
-    () => format(date, "d 'de' MMMM", { local: pt }),
-    [date]
-  );
-
-  function hanblePrevDay() {
-    setDate(subDays(date, 1));
-  }
-
   function hanbleNextDay() {
     setDate(addDays(date, 1));
   }
@@ -65,17 +56,72 @@ export default function Dashboard() {
   return (
     <Container>
       <header>
-        <button type="button" onClick={hanblePrevDay}>
-          <MdChevronLeft size={36} color="#FFF" />
-        </button>
-        <strong>{dateFormatted}</strong>
-        <button type="button" onClick={hanbleNextDay}>
-          <MdChevronRight size={36} color="#FFF" />
-        </button>
+        <h1>
+          <strong>Meus meetups</strong>
+        </h1>
+        <Link to="/manager">
+          <button type="button" onClick={hanbleNextDay}>
+            <MdAddCircleOutline size={20} color="#FFF" />
+
+            <strong>Novo Meetup</strong>
+          </button>
+        </Link>
       </header>
 
       <ul>
-        {schedule.map(time => (
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de maio, as 20h</strong>
+            <Link to="/details">
+              <MdChevronRight size={24} color="#FFF" />
+            </Link>
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de maio, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de maio, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de maio, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Outubrro, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Setembro, ás 23h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+      </ul>
+    </Container>
+  );
+}
+
+/**
+ *
+ *
+ * {schedule.map(time => (
           <Time key={time.time} past={time.past} available={!time.appointment}>
             <strong>{time.time}</strong>
             <span>
@@ -83,7 +129,4 @@ export default function Dashboard() {
             </span>
           </Time>
         ))}
-      </ul>
-    </Container>
-  );
-}
+ */
