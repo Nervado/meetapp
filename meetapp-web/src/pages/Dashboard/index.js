@@ -64,8 +64,7 @@ export default function Dashboard() {
         <Link to="/manager">
           <button type="button" onClick={hanbleNextDay}>
             <MdAddCircleOutline size={20} color="#FFF" />
-
-            <strong>Novo Meetup</strong>
+            <strong>Novo meetup</strong>
           </button>
         </Link>
       </header>

@@ -31,10 +31,11 @@ export const Container = styled.div`
 
       display: flex;
       align-items: center;
-      border: 0;
+      justify-content: space-around;
 
       background: #f94d6a;
-      padding-left: 20px;
+
+      border: 0;
 
       border-radius: 4px;
       transition: background 0.2s;
@@ -46,7 +47,7 @@ export const Container = styled.div`
         color: #fff;
         font-weight: bold;
         font-size: 16px;
-        margin-left: 10px;
+        margin-left: -20px;
       }
     }
   }

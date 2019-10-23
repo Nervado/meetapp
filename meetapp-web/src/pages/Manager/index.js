@@ -1,5 +1,8 @@
 import React from 'react';
 
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
 // import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import { MdAddCircleOutline } from 'react-icons/md';
@@ -35,7 +38,13 @@ export default function Manager() {
           type="description"
           placeholder="Descrição completa "
         />
-        <Input name="date" type="date" placeholder="Data do Meetup" />
+        <input
+          name="date"
+          type="date"
+          showTimePicker
+          placeholder="Data do Meetup"
+        />
+        <DatePicker showTimeSelect dateFormat="Pp" />
         <Input name="local" type="local" placeholder="Localização" />
         <div className="button">
           <button type="submit">

@@ -74,11 +74,12 @@ export const Content = styled.div`
     height: 300px;
   }
   .description {
-    margin-top: 30px;
+    margin-top: 25px;
     height: 128px;
     width: 900px;
     resize: none;
     text-align: justify;
+    overflow: hidden;
   }
 
   footer {

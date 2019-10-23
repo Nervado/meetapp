@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
-import { Input } from '@rocketseat/unform';
-
 export const Container = styled.div`
   height: 100%;
   max-width: 900px;
   margin: 50px auto 0px auto;
-  font-size: 18px;
-
+  font-family: Helvetica, sans-serif;
   form {
     display: flex;
     flex-direction: column;
@@ -24,29 +21,43 @@ export const Container = styled.div`
       margin: 0 0 10px;
 
       &::placeholder {
-        color: rgb(255, 255, 255, 0.7);
-        font-size: 18px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      &:nth-child(3) {
+        height: 200px;
       }
     }
-    .button {
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 10px 0 20px;
+    }
+    .button-area {
       display: flex;
       justify-content: flex-end;
 
       button {
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
 
-        width: 180px;
+        width: 162px;
         height: 42px;
+
+        margin: 0;
+        border: 0;
         background: #f94d6a;
-        font-weight: bold;
+        border-radius: 4px;
+        padding: 0 20px;
 
         color: #fff;
-        border: 0;
-        border-radius: 4px;
+        font-weight: bold;
+        font-size: 16px;
 
         transition: background 0.2s;
+
+        margin-top: 20px;
         margin-bottom: 120px;
 
         &:hover {
@@ -54,27 +65,8 @@ export const Container = styled.div`
         }
 
         strong {
-          margin-left: -10px;
         }
       }
     }
-  }
-`;
-
-export const MultilineInput = styled(Input)`
-  background: rgba(0, 0, 0, 0.1);
-  border: 0;
-  border-radius: 4px;
-  max-width: 100%;
-  height: 200px;
-  padding: 0 15px;
-  color: #fff;
-  font-size: 18px;
-  margin: 0 0 10px;
-  padding-top: 20px;
-  resize: none;
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.7);
   }
 `;

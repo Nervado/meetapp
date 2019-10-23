@@ -29,6 +29,7 @@ export const Content = styled.div`
 `;
 
 export const Profile = styled.div`
+  font-family: Helvetica, sans-serif;
   display: flex;
   margin-left: 20px;
   padding-left: 20px;

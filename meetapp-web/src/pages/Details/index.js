@@ -14,7 +14,7 @@ import { utcToZonedTime } from 'date-fns-tz';
 
 // import pt from 'date-fns/locale/pt';
 
-import { MdAddCircleOutline, MdChevronRight } from 'react-icons/md';
+import { MdPlace, MdModeEdit, MdDelete, MdToday } from 'react-icons/md';
 import api from '~/services/api';
 
 import banner from '~/assets/meetup.png';
@@ -66,7 +66,7 @@ export default function Dashboard() {
         <div className="buttons">
           <Link to="/manager">
             <button className="edit" type="button" onClick={hanbleNextDay}>
-              <MdAddCircleOutline size={20} color="#FFF" />
+              <MdModeEdit size={20} color="#FFF" />
 
               <strong>Editar</strong>
             </button>
@@ -74,7 +74,7 @@ export default function Dashboard() {
 
           <Link to="/dashboard">
             <button type="button" onClick={hanbleNextDay}>
-              <MdAddCircleOutline size={20} color="#FFF" />
+              <MdDelete size={20} color="#FFF" />
 
               <strong>Cancelar</strong>
             </button>
@@ -87,15 +87,23 @@ export default function Dashboard() {
           Lorem Ipsum é simplesmente uma simulação de texto da indústria
           tipográfica e de impressos, e vem sendo utilizado desde o século XVI,
           quando um impressor desconhecido pegou uma bandeja de tipos e os
-          embaralhou para fazer um livro de modelos de tipos. PageMaker.
+          embaralhou para fazer um livro de modelos de tipos. PageMaker. Lorem
+          Ipsum é simplesmente uma simulação de texto da indústria tipográfica e
+          de impressos, e vem sendo utilizado desde o século XVI, quando um
+          impressor desconhecido pegou uma bandeja de tipos e os embaralhou para
+          fazer um livro de modelos de tipos. PageMaker. Lorem Ipsum é
+          simplesmente uma simulação de texto da indústria tipográfica e de
+          impressos, e vem sendo utilizado desde o século XVI, quando um
+          impressor desconhecido pegou uma bandeja de tipos e os embaralhou para
+          fazer um livro de modelos de tipos. PageMaker.
         </div>
         <footer>
           <div className="data">
-            <MdAddCircleOutline size={20} color="#FFF" />
+            <MdToday size={20} color="#FFF" />
             <small>dia 25 de maio de 2019</small>
           </div>
           <div className="local">
-            <MdAddCircleOutline size={20} color="#FFF" />
+            <MdPlace size={20} color="#FFF" />
             <small>dia 25 de maio de 2019</small>
           </div>
         </footer>
