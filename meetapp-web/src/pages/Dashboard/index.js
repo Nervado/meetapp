@@ -22,9 +22,10 @@ import { Container, Meetup } from './styles';
 const range = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 
 export default function Dashboard() {
-  const [, setSchedule] = useState([]);
-  const [date, setDate] = useState(new Date());
+  // const [, setSchedule] = useState([]);
+  // const [date, setDate] = useState(new Date());
 
+  /*
   useEffect(() => {
     async function loadSchedule() {
       const response = await api.get('schedule', {
@@ -49,8 +50,9 @@ export default function Dashboard() {
     loadSchedule();
   }, [date]);
 
+  */
   function hanbleNextDay() {
-    setDate(addDays(date, 1));
+    // setDate(addDays(date, 1));
   }
 
   return (
@@ -96,6 +98,105 @@ export default function Dashboard() {
           <strong>Meetup de nao sei o que</strong>
           <div>
             <strong>24 de maio, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Outubrro, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Setembro, ás 23h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Outubrro, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Setembro, ás 23h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Outubrro, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Setembro, ás 23h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Outubrro, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Setembro, ás 23h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Outubrro, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Setembro, ás 23h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Outubrro, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Setembro, ás 23h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Outubrro, as 20h</strong>
+            <MdChevronRight size={24} color="#FFF" />
+          </div>
+        </Meetup>
+        <Meetup>
+          <strong>Meetup de nao sei o que</strong>
+          <div>
+            <strong>24 de Setembro, ás 23h</strong>
             <MdChevronRight size={24} color="#FFF" />
           </div>
         </Meetup>

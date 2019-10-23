@@ -1,46 +1,97 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { Form, Input } from '@rocketseat/unform';
-import { MdAddCircleOutline } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import {
+  addDays,
+  setHours,
+  setMinutes,
+  setSeconds,
+  isBefore,
+  isEqual,
+  parseISO,
+} from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
-import AvatarInput from '../../components/BannerInput';
+// import pt from 'date-fns/locale/pt';
 
-import { updateProfileRequest } from '~/store/modules/user/actions';
-// import { signOut } from '~/store/modules/auth/actions';
+import { MdAddCircleOutline, MdChevronRight } from 'react-icons/md';
+import api from '~/services/api';
 
-import { Container } from './styles';
+import { Container, Meetup } from './styles';
 
-export default function Profile() {
-  const dispatch = useDispatch();
+const range = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 
-  const profile = useSelector(state => state.user.profile);
+export default function Dashboard() {
+  // const [, setSchedule] = useState([]);
+  // const [date, setDate] = useState(new Date());
 
-  function handleSubmit(data) {
-    dispatch(updateProfileRequest(data));
+  /*
+  useEffect(() => {
+    async function loadSchedule() {
+      const response = await api.get('schedule', {
+        params: { date },
+      });
+
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const data = range.map(hour => {
+        const checkDate = setSeconds(setMinutes(setHours(date, hour), 0), 0);
+        const compareDate = utcToZonedTime(checkDate, timezone);
+
+        return {
+          time: `${hour}:00h`,
+          past: isBefore(compareDate, new Date()),
+          appointment: response.data.find(a =>
+            isEqual(parseISO(a.date), compareDate)
+          ),
+        };
+      });
+      setSchedule(data);
+    }
+    loadSchedule();
+  }, [date]);
+
+  */
+  function hanbleNextDay() {
+    // setDate(addDays(date, 1));
   }
 
-  // function handleSignOut() {
-  // dispatch(signOut());
-  // }
   return (
     <Container>
-      <Form initialData={profile} onSubmit={handleSubmit}>
-        <AvatarInput name="banner" />
-        <Input name="title" placeholder="Titulo do Meetup" />
-        <Input
-          name="description"
-          type="description"
-          placeholder="Descrição completa"
-        />
+      <header>
+        <h1>
+          <strong>Titulo do Meetup</strong>
+        </h1>
+        <div className="buttons">
+          <Link to="/manager">
+            <button className="edit" type="button" onClick={hanbleNextDay}>
+              <MdAddCircleOutline size={20} color="#FFF" />
 
-        <Input name="date" type="date" placeholder="Data do Meetup" />
-        <Input name="local" type="local" placeholder="Localização" />
-        <button type="submit">
-          <MdAddCircleOutline size={20} color="#FFF" />
-          Salvar Meetup
-        </button>
-      </Form>
+              <strong>Editar</strong>
+            </button>
+          </Link>
+
+          <Link to="/cancel">
+            <button type="button" onClick={hanbleNextDay}>
+              <MdAddCircleOutline size={20} color="#FFF" />
+
+              <strong>Cancelar</strong>
+            </button>
+          </Link>
+        </div>
+      </header>
     </Container>
   );
 }
+
+/**
+ *
+ *
+ * {schedule.map(time => (
+          <Time key={time.time} past={time.past} available={!time.appointment}>
+            <strong>{time.time}</strong>
+            <span>
+              {time.appointment ? time.appointment.user.name : 'Em aberto'}
+            </span>
+          </Time>
+        ))}
+ */

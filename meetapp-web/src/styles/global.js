@@ -15,12 +15,15 @@ export default createGlobalStyle`
   *:focus {
     outline: 0;
   }
-  body, html, #root {
+
+  body , html, #root {
+
     height: 100%;
   }
 
   body {
     -webkit-font-smoothing: antialiased;
+
   }
 
   body, input, button {

@@ -2,57 +2,97 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Container = styled.div`
-  height: 100%;
+  font-family: Helvetica, sans-serif;
+
   max-width: 900px;
-  margin: 50px auto 0px auto;
-  form {
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  header {
+    height: 142px;
+    max-width: 100%;
     display: flex;
-    flex-direction: column;
-    margin-top: 30px;
-    input {
-      background: rgba(0, 0, 0, 0.1);
-      border: 0;
-      border-radius: 4px;
-      height: 50px;
-      padding: 0 15px;
-      color: #fff;
-      margin: 0 0 10px;
+    align-items: center;
+    justify-content: space-between;
 
-      &::placeholder {
-        color: rgba(255, 255, 255, 0.7);
-      }
-      &:nth-child(3) {
-        height: 200px;
-      }
+    strong {
+      color: #fff;
+      font-size: 32px;
+      font-family: Helvetica, sans-serif;
     }
 
-    button {
-      margin: 5px 0 0;
-      width: 180px;
-      height: 42px;
-      background: #f94d6a;
-      font-weight: bold;
-      color: #fff;
-      border: 0;
-      border-radius: 4px;
-      font-size: 16px;
-      transition: background 0.2s;
+    .buttons {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
 
-      align-self: center;
+      button {
+        width: auto;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        margin: 0;
+        border: 0;
+        background: #f94d6a;
+        padding: 0 20px;
 
-      &:hover {
-        background: ${darken(0.03, '#f94d6a')};
+        border-radius: 4px;
+        transition: background 0.2s;
+
+        &:hover {
+          background: ${darken(0.03, '#f94d6a')};
+        }
+
+        strong {
+          color: #fff;
+          font-weight: bold;
+          font-size: 16px;
+          margin-left: 10px;
+        }
+      }
+      .edit {
+        background: #4dbaf9;
+        margin-right: 15px;
+        &:hover {
+          background: ${darken(0.05, '#4dbaf9')};
+        }
       }
     }
-    a {
-      color: #fff;
-      margin-top: 15px;
-      font-size: 16px;
-      opacity: 0.8;
+  }
 
-      &:hover {
-        opacity: 1;
-      }
+  ul {
+    max-width: 100%;
+  }
+`;
+
+export const Meetup = styled.li`
+  height: 62px;
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background: rgb(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  strong {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 30px;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    text-align: right;
+    margin-right: 20px;
+
+    strong {
+      opacity: 0.6;
+      margin-right: 30px;
     }
   }
 `;
