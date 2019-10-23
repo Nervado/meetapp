@@ -92,9 +92,11 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     margin-right: 30px;
+    opacity: 0.6;
   }
 
   footer div small {
     margin-left: 7px;
+    color: #fff;
   }
 `;
