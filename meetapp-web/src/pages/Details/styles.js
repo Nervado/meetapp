@@ -61,38 +61,40 @@ export const Container = styled.div`
       }
     }
   }
-
-  ul {
-    max-width: 100%;
-  }
 `;
 
-export const Meetup = styled.li`
-  height: 62px;
-  width: 100%;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  background: rgb(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+export const Content = styled.div`
+  font-family: Helvetica, sans-serif;
+  color: #fff;
+  opacity: 0.8;
+  font-size: 18px;
 
-  strong {
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 30px;
+  img {
+    width: 100%;
+    height: 300px;
+  }
+  .description {
+    margin-top: 30px;
+    height: 128px;
+    width: 900px;
+    resize: none;
+    text-align: justify;
   }
 
-  div {
+  footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 285px;
+  }
+  footer div {
     display: flex;
     align-items: center;
-    text-align: right;
-    margin-right: 20px;
+    margin-right: 30px;
+  }
 
-    strong {
-      opacity: 0.6;
-      margin-right: 30px;
-    }
+  footer div small {
+    margin-left: 7px;
   }
 `;
