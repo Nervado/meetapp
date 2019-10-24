@@ -5,7 +5,7 @@ export const Container = styled.div`
   height: 100%;
   max-width: 900px;
   margin: 50px auto 0px auto;
-  font-family: Helvetica, sans-serif;
+
   form {
     display: flex;
     flex-direction: column;
@@ -19,6 +19,8 @@ export const Container = styled.div`
       padding: 0 15px;
       color: #fff;
       margin: 0 0 10px;
+      font-family: Helvetica, sans-serif;
+      font-size: 18px;
 
       &::placeholder {
         color: rgba(255, 255, 255, 0.7);
@@ -52,6 +54,7 @@ export const Container = styled.div`
         padding: 0 20px;
 
         color: #fff;
+        font-family: Helvetica, sans-serif;
         font-weight: bold;
         font-size: 16px;
 
@@ -63,8 +66,8 @@ export const Container = styled.div`
         &:hover {
           background: ${darken(0.03, '#f94d6a')};
         }
-
         strong {
+          margin-left: 7px;
         }
       }
     }
