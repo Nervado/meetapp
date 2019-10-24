@@ -47,7 +47,7 @@ export const Container = styled.div`
         color: #fff;
         font-weight: bold;
         font-size: 16px;
-        margin-left: -20px;
+        margin-left: -30px;
       }
     }
   }

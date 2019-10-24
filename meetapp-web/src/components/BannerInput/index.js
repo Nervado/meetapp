@@ -13,7 +13,7 @@ export default function BannerInput() {
   const [preview, setPreview] = useState(defaultValue && defaultValue.url);
 
   const ref = useRef();
-
+  /*
   useEffect(() => {
     if (ref.current) {
       registerField({
@@ -23,19 +23,16 @@ export default function BannerInput() {
       });
     }
   }, [ref, registerField]);
-
-  async function handleChange(e) {
-    const data = new FormData();
-
-    data.append('file', e.target.files[0]);
-
-    const response = await api.post('files', data);
-
-    const { id, url } = response.data;
-
-    setFile(id);
-    setPreview(url);
+*/
+  async function handleChange() {
+    // const data = new FormData();
+    //  data.append('file', e.target.files[0]);
+    // const response = await api.post('files', data);
+    // const { id, url } = response.data;
+    // setFile(id);
+    //  setPreview(url);
   }
+  // const preview = false;
   return (
     <Container>
       <label htmlFor="banner">

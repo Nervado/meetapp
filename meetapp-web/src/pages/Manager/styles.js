@@ -15,11 +15,12 @@ export const Container = styled.div`
     margin-top: 30px;
 
     input {
+      font-size: 18px;
       background: rgba(0, 0, 0, 0.1);
       border: 0;
       border-radius: 4px;
       height: 50px;
-      padding: 0 15px;
+      padding: 0 20px;
       color: #fff;
       margin: 0 0 10px;
 
@@ -28,6 +29,7 @@ export const Container = styled.div`
         font-size: 18px;
       }
     }
+
     .button {
       display: flex;
       justify-content: flex-end;
@@ -40,6 +42,7 @@ export const Container = styled.div`
         width: 180px;
         height: 42px;
         background: #f94d6a;
+        font-size: 16px;
         font-weight: bold;
 
         color: #fff;
@@ -47,6 +50,7 @@ export const Container = styled.div`
         border-radius: 4px;
 
         transition: background 0.2s;
+        margin-top: 20px;
         margin-bottom: 120px;
 
         &:hover {
@@ -58,6 +62,15 @@ export const Container = styled.div`
         }
       }
     }
+
+    .select-date {
+      background: rgba(0, 0, 0, 0);
+      width: 100%;
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: 18px;
+      height: 50px;
+    }
   }
 `;
 
@@ -67,9 +80,10 @@ export const MultilineInput = styled(Input)`
   border-radius: 4px;
   max-width: 100%;
   height: 200px;
-  padding: 0 15px;
+  padding: 0 20px;
   color: #fff;
   font-size: 18px;
+
   margin: 0 0 10px;
   padding-top: 20px;
   resize: none;
