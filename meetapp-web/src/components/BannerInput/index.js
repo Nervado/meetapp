@@ -40,12 +40,7 @@ export default function BannerInput() {
     <Container>
       <label htmlFor="banner">
         {preview ? (
-          <img
-            src={
-              preview || 'https://api.adorable.io/avatars/50/abott@adorable.png'
-            }
-            alt="banner"
-          />
+          <img src={preview} alt="banner" />
         ) : (
           <div>
             <MdCameraAlt size={54} color="#555" />
