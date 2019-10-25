@@ -1,32 +1,27 @@
 import React from 'react';
-
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import { MdAddCircleOutline } from 'react-icons/md';
 
-// import { updateProfileRequest } from '~/store/modules/user/actions';
-// import { signOut } from '~/store/modules/auth/actions';
+import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import { Container } from './styles';
 
 export default function Manager() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const profile = useSelector(state => state.user.profile);
+  const profile = useSelector(state => state.user.profile);
 
-  // function handleSubmit(data) {
-  // dispatch(updateProfileRequest(data));
-  // }
+  function handleSubmit(data) {
+    dispatch(updateProfileRequest(data));
+  }
 
-  // function handleSignOut() {
-  // dispatch(signOut());
-  // }
   return (
     <Container>
-      <Form initialData="" onSubmit={() => {}}>
-        <Input name="name" placeholder="Nome da pessoa" />
+      <Form initialData={profile} onSubmit={handleSubmit}>
+        <Input name="name" placeholder="Nome" />
 
-        <Input name="email" type="email" placeholder="Data do Meetup" />
+        <Input name="email" type="email" placeholder="Email" />
         <hr />
         <Input
           name="oldPassword"

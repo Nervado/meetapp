@@ -1,59 +1,53 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import {
-  addDays,
-  setHours,
-  setMinutes,
-  setSeconds,
-  isBefore,
-  isEqual,
-  parseISO,
-} from 'date-fns';
-import { utcToZonedTime } from 'date-fns-tz';
+import { parseISO, format } from 'date-fns';
+// import { useDispatch } from 'react-redux';
+// import { zonedTimeToUtc } from 'date-fns-tz';
 
-// import pt from 'date-fns/locale/pt';
+import pt from 'date-fns/locale/pt-BR';
 
 import { MdAddCircleOutline, MdChevronRight } from 'react-icons/md';
+// import { loadMeetupRequest } from '~/store/modules/meetup/actions';
+
 import api from '~/services/api';
+
+// import {upda} from '~/store/modules/meetup/actions'
 
 import { Container, Meetup } from './styles';
 
-// const range = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
-
 export default function Dashboard() {
-  // const [, setSchedule] = useState([]);
-  // const [date, setDate] = useState(new Date());
+  const [meetups, setMeetup] = useState([]);
 
-  /*
   useEffect(() => {
-    async function loadSchedule() {
-      const response = await api.get('schedule', {
-        params: { date },
-      });
+    async function loadMeetup() {
+      const { data } = await api.get('meets');
 
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const data = range.map(hour => {
-        const checkDate = setSeconds(setMinutes(setHours(date, hour), 0), 0);
-        const compareDate = utcToZonedTime(checkDate, timezone);
-
+      const meets = data.map(meetup => {
         return {
-          time: `${hour}:00h`,
-          past: isBefore(compareDate, new Date()),
-          appointment: response.data.find(a =>
-            isEqual(parseISO(a.date), compareDate)
+          formattedDate: format(
+            parseISO(meetup.date),
+            "dd 'de' MMMM', às ' HH:mm'h'",
+            {
+              locale: pt,
+            }
           ),
+          id: meetup.id,
+          organizer: meetup.organizer_id,
+          date: meetup.date,
+          past: meetup.past,
+          title: meetup.title,
+          description: meetup.description,
+          local: meetup.local,
+          banner: meetup.banner,
         };
       });
-      setSchedule(data);
-    }
-    loadSchedule();
-  }, [date]);
 
-  */
-  function hanbleNextDay() {
-    // setDate(addDays(date, 1));
-  }
+      setMeetup(meets);
+    }
+    loadMeetup();
+  }, []);
 
   return (
     <Container>
@@ -62,7 +56,7 @@ export default function Dashboard() {
           <strong>Meus meetups</strong>
         </h1>
         <Link to="/manager">
-          <button type="button" onClick={hanbleNextDay}>
+          <button type="button">
             <MdAddCircleOutline size={20} color="#FFF" />
             <strong>Novo meetup</strong>
           </button>
@@ -70,149 +64,17 @@ export default function Dashboard() {
       </header>
 
       <ul>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de maio, as 20h</strong>
-            <Link to="/details">
-              <MdChevronRight size={24} color="#FFF" />
-            </Link>
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de maio, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de maio, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de maio, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Outubrro, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Setembro, ás 23h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Outubrro, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Setembro, ás 23h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Outubrro, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Setembro, ás 23h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Outubrro, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Setembro, ás 23h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Outubrro, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Setembro, ás 23h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Outubrro, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Setembro, ás 23h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Outubrro, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Setembro, ás 23h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Outubrro, as 20h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
-        <Meetup>
-          <strong>Meetup de nao sei o que</strong>
-          <div>
-            <strong>24 de Setembro, ás 23h</strong>
-            <MdChevronRight size={24} color="#FFF" />
-          </div>
-        </Meetup>
+        {meetups.map(meetup => (
+          <Meetup key={meetup.id} past={meetup.past}>
+            <strong>{meetup.title}</strong>
+            <div>
+              <strong>{meetup.formattedDate}</strong>
+              <Link to={{ pathname: '/details', state: { meetup } }}>
+                <MdChevronRight size={24} color="#FFF" />
+              </Link>
+            </div>
+          </Meetup>
+        ))}
       </ul>
     </Container>
   );

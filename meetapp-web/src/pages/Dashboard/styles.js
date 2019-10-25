@@ -81,7 +81,8 @@ export const Meetup = styled.li`
     margin-right: 20px;
 
     strong {
-      opacity: 0.6;
+      opacity: ${props => (props.past ? 0.6 : 1)};
+
       margin-right: 30px;
     }
   }
