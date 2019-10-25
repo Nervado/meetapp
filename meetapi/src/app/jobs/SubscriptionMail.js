@@ -10,7 +10,6 @@ class SubcriptionMail {
   async handle({ data }) {
     const { meetup, organizer, subscriber } = data.subscription;
 
-    console.log('A fila Executou');
     await Mail.sendMail({
       to: `${organizer.name}<${organizer.email}>`,
       subject: `Novo inscrito em seu Meetup #${meetup.id}`,

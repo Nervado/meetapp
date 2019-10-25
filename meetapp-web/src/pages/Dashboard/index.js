@@ -1,24 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 import { parseISO, format } from 'date-fns';
-// import { useDispatch } from 'react-redux';
-// import { zonedTimeToUtc } from 'date-fns-tz';
 
 import pt from 'date-fns/locale/pt-BR';
 
 import { MdAddCircleOutline, MdChevronRight } from 'react-icons/md';
-// import { loadMeetupRequest } from '~/store/modules/meetup/actions';
 
 import api from '~/services/api';
 
-// import {upda} from '~/store/modules/meetup/actions'
+import { clearMeetupRequest } from '~/store/modules/meetup/actions';
 
 import { Container, Meetup } from './styles';
 
 export default function Dashboard() {
   const [meetups, setMeetup] = useState([]);
+  const dispatch = useDispatch();
+
+  async function handleNew() {
+    await dispatch(clearMeetupRequest());
+  }
 
   useEffect(() => {
     async function loadMeetup() {
@@ -34,13 +37,13 @@ export default function Dashboard() {
             }
           ),
           id: meetup.id,
-          organizer: meetup.organizer_id,
           date: meetup.date,
           past: meetup.past,
           title: meetup.title,
           description: meetup.description,
           local: meetup.local,
           banner: meetup.banner,
+          user: meetup.user,
         };
       });
 
@@ -55,12 +58,11 @@ export default function Dashboard() {
         <h1>
           <strong>Meus meetups</strong>
         </h1>
-        <Link to="/manager">
-          <button type="button">
-            <MdAddCircleOutline size={20} color="#FFF" />
-            <strong>Novo meetup</strong>
-          </button>
-        </Link>
+
+        <button type="button" onClick={handleNew}>
+          <MdAddCircleOutline size={20} color="#FFF" />
+          <strong>Novo meetup</strong>
+        </button>
       </header>
 
       <ul>
@@ -79,16 +81,3 @@ export default function Dashboard() {
     </Container>
   );
 }
-
-/**
- *
- *
- * {schedule.map(time => (
-          <Time key={time.time} past={time.past} available={!time.appointment}>
-            <strong>{time.time}</strong>
-            <span>
-              {time.appointment ? time.appointment.user.name : 'Em aberto'}
-            </span>
-          </Time>
-        ))}
- */

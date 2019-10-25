@@ -3,7 +3,6 @@ import { isBefore, parseISO } from 'date-fns';
 
 import Meet from '../models/Meet';
 import File from '../models/File';
-import User from '../models/User';
 
 class OrganizerController {
   async store(req, res) {
@@ -33,26 +32,33 @@ class OrganizerController {
         .json({ error: 'Não é possível criar um evento no passado' });
     }
 
-    const {
-      id,
-      local,
-      title,
-      date,
-      description,
-      organizer_id,
-      banner_id,
-      cancelable,
-      past,
-    } = await Meet.create({
+    const { id } = await Meet.create({
       ...req.body,
       date: dateChecked,
       organizer_id: req.userId,
     });
 
+    const {
+      local,
+      date,
+      title,
+      description,
+      cancelable,
+      past,
+      banner,
+    } = await Meet.findByPk(id, {
+      include: [
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
+
     return res.json({
       id,
-      organizer_id,
-      banner_id,
+      banner,
       local,
       date,
       title,
@@ -77,7 +83,7 @@ class OrganizerController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fail!' });
+      return res.status(400).json({ error: 'Validation fail!', schema });
     }
 
     const { id } = req.params;
@@ -111,17 +117,19 @@ class OrganizerController {
     const meetups = await Meet.findAll({
       where: { organizer_id: req.userId },
       order: ['date'],
-      attributes: ['id', 'date', 'description', 'local', 'past', 'cancelable'],
+      attributes: [
+        'id',
+        'title',
+        'date',
+        'description',
+        'local',
+        'past',
+        'cancelable',
+      ],
       include: [
         {
           model: File,
           as: 'banner',
-          attributes: ['id', 'name', 'url'],
-        },
-        {
-          model: User,
-          as: 'user',
-          attributes: ['id', 'name', 'email'],
         },
       ],
     });
@@ -147,7 +155,7 @@ class OrganizerController {
     if (!meet.cancelable) {
       return res
         .status(400)
-        .json({ error: 'O meetup não pode mais ser cancelado' });
+        .json({ error: 'O meetup não pode mais ser cancelado.' });
     }
 
     // remove meetup from database

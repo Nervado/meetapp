@@ -18,24 +18,19 @@ class UserController {
       return res.status(400).json({ error: 'Validation fail!' });
     }
 
-    // check duplicated emails ...To Do
-
+    // check duplicated emails
     const checkEmail = await User.findOne({ where: { email: req.body.email } });
 
     if (checkEmail) {
-      return res.status(400).json({ error: 'Duplicated email' });
+      return res.status(400).json({ error: 'Duplicated email!' });
     }
 
-    const { id, name, email, is_organizer } = await User.create({
-      ...req.body,
-      is_organizer: true,
-    });
+    const { id, name, email } = await User.create(req.body);
 
     return res.json({
       id,
       name,
       email,
-      is_organizer,
     });
   }
 
@@ -59,12 +54,12 @@ class UserController {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const { email, oldPassword } = req.body;
+    const { name, email, oldPassword } = req.body;
 
     const user = await User.findByPk(req.userId);
 
     if (!user) {
-      return res.status(400).json({ error: ' User not found ' });
+      return res.status(400).json({ error: 'User not found!' });
     }
 
     // check email
@@ -77,12 +72,12 @@ class UserController {
     }
 
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
-      return res.status(401).json({ error: 'Password does not match' });
+      return res.status(401).json({ error: 'Password does not match!' });
     }
 
     await user.update(req.body);
 
-    return res.status(200).json({ msg: 'usuario atualizado' });
+    return res.status(200).json({ name, email });
   }
 }
 

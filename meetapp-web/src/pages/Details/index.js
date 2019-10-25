@@ -21,10 +21,11 @@ import { Container, Content } from './styles';
 export default function Details({ location }) {
   const { meetup } = location.state;
 
+  console.tron.log(location);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadMeetupRequest(location.state));
+    dispatch(loadMeetupRequest({ meetup }));
   }, []);
 
   function handleCancel() {

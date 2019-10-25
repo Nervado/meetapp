@@ -4,7 +4,14 @@ import api from '~/services/api';
 
 import history from '~/services/history';
 
-import { cancelMeetupSucess, cancelMeetupFailure } from './actions';
+import {
+  cancelMeetupSuccess,
+  cancelMeetupFailure,
+  createMeetupSuccess,
+  createMeetupFailure,
+  updateMeetupFailure,
+  updateMeetupSuccess,
+} from './actions';
 
 export function* cancelMeetup({ payload }) {
   try {
@@ -14,7 +21,7 @@ export function* cancelMeetup({ payload }) {
 
     toast.success('Meetup cancelado');
 
-    yield put(cancelMeetupSucess());
+    yield put(cancelMeetupSuccess());
     history.push('/dashboard');
   } catch (err) {
     toast.error(err.response.data.error);
@@ -23,4 +30,53 @@ export function* cancelMeetup({ payload }) {
   }
 }
 
-export default all([takeLatest('@meetup/CANCEL_MEETUP_REQUEST', cancelMeetup)]);
+export function clearMeetup() {
+  history.push('/manager');
+}
+
+export function* createMeetup({ payload }) {
+  try {
+    const { title, description, local, date, banner_id } = payload.meetup;
+
+    const meetup = { title, description, local, date, banner_id };
+
+    yield call(api.post, '/meets', meetup);
+
+    toast.success('Meetup criado com sucesso');
+
+    yield put(createMeetupSuccess());
+
+    history.push('/dashboard');
+  } catch (err) {
+    toast.error(err.response.data.error);
+
+    yield put(createMeetupFailure());
+  }
+}
+
+export function* updateMeetup({ payload }) {
+  try {
+    const { id, title, description, local, date } = payload.meetup;
+
+    const meetup = { title, description, local, date };
+
+    yield call(api.put, `/meets/${id}`, meetup);
+
+    toast.success('Meetup atualizado com sucesso');
+
+    yield put(updateMeetupSuccess());
+
+    history.push('/dashboard');
+  } catch (err) {
+    toast.error(err.response.data.error);
+
+    yield put(updateMeetupFailure());
+  }
+}
+
+export default all([
+  takeLatest('@meetup/CANCEL_MEETUP_REQUEST', cancelMeetup),
+  takeLatest('@meetup/CLEAR_MEETUP_REQUEST', clearMeetup),
+  takeLatest('@meetup/CREATE_MEETUP_REQUEST', createMeetup),
+  takeLatest('@meetup/UPDATE_MEETUP_REQUEST', updateMeetup),
+]);

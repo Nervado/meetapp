@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from 'react';
 import { useField } from '@rocketseat/unform';
 import { MdCameraAlt } from 'react-icons/md';
@@ -7,32 +8,37 @@ import api from '~/services/api';
 import { Container } from './styles';
 
 export default function BannerInput() {
-  const { defaultValue, registerField } = useField('avatar');
+  const { defaultValue, registerField } = useField('banner');
 
   const [file, setFile] = useState(defaultValue && defaultValue.id);
   const [preview, setPreview] = useState(defaultValue && defaultValue.url);
 
   const ref = useRef();
-  /*
+
   useEffect(() => {
     if (ref.current) {
       registerField({
-        name: 'banner',
+        name: 'banner_id',
         ref: ref.current,
         path: 'dataset.file',
       });
     }
-  }, [ref, registerField]);
-*/
-  async function handleChange() {
-    // const data = new FormData();
-    //  data.append('file', e.target.files[0]);
-    // const response = await api.post('files', data);
-    // const { id, url } = response.data;
-    // setFile(id);
-    //  setPreview(url);
+  }, [ref.current]); //eslint-disable-line
+
+  async function handleChange(e) {
+    const data = new FormData();
+
+    data.append('file', e.target.files[0]);
+
+    const response = await api.post('files', data);
+
+    console.tron.log(response.data);
+
+    const { id, url } = response.data;
+
+    setFile(id);
+    setPreview(url);
   }
-  // const preview = false;
   return (
     <Container>
       <label htmlFor="banner">
@@ -44,7 +50,6 @@ export default function BannerInput() {
             <strong>Selecione a imagem</strong>
           </div>
         )}
-
         <input
           type="file"
           id="banner"
@@ -57,3 +62,24 @@ export default function BannerInput() {
     </Container>
   );
 }
+
+/*
+<label htmlFor="avatar">
+  <img
+    src={
+      preview || 'https://api.adorable.io/avatars/50/abott@adorable.png'
+    }
+    alt=""
+  />
+
+
+       /*
+        {preview ? (
+          <img src={preview || } alt="banner" />
+        ) : (
+          <div>
+            <MdCameraAlt size={54} color="#555" />
+            <strong>Selecione a imagem</strong>
+          </div>
+        )}
+*/

@@ -1,38 +1,51 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { Form, Input } from '@rocketseat/unform';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import { useSelector, useDispatch } from 'react-redux';
 
-import { Form, Input } from '@rocketseat/unform';
 import { MdAddCircleOutline } from 'react-icons/md';
 
 import BannerInput from '../../components/BannerInput';
 
-import { updateMeetupRequest } from '~/store/modules/meetup/actions';
+import {
+  updateMeetupRequest,
+  createMeetupRequest,
+} from '~/store/modules/meetup/actions';
 
 import { Container, MultilineInput } from './styles';
 
 export default function Manager() {
   const loadedMeetup = useSelector(state => state.meetup.meetup);
+  const { id } = loadedMeetup;
+  // console.tron.log(loadedMeetup.id);
 
-  const _date = loadedMeetup ? loadedMeetup.date : null;
+  const salvedDate =
+    loadedMeetup.date === null ? null : parseISO(loadedMeetup.date);
 
-  const [newdate, setNewDate] = useState(parseISO(_date));
+  const [newdate, setNewDate] = useState(salvedDate);
 
   const dispatch = useDispatch();
 
   function handleSubmit(data) {
-    const updatedMeetup = { ...data, newdate };
+    const updatedMeetup = { ...data, date: newdate };
 
-    dispatch(updateMeetupRequest(updatedMeetup));
+    console.tron.log(updatedMeetup);
+
+    if (id === null) {
+      dispatch(createMeetupRequest(updatedMeetup));
+    } else {
+      dispatch(updateMeetupRequest({ ...updatedMeetup, id }));
+    }
   }
 
   return (
     <Container>
       <Form initialData={loadedMeetup} onSubmit={handleSubmit}>
-        <BannerInput name="banner" />
+        <BannerInput name="banner_id" />
         <Input name="title" placeholder="Titulo do Meetup" />
 
         <MultilineInput
@@ -43,13 +56,13 @@ export default function Manager() {
 
         <div className="select-date">
           <DatePicker
-            name="formattedDate"
+            name="date"
             placeholder="Data do Meetup"
             showTimeSelect
             dateFormat="dd 'de' MMMM', às ' HH:mm'h'"
             placeholderText="Data do meetup"
             locale={pt}
-            selected={newdate || ''}
+            selected={newdate}
             onChange={date => setNewDate(date)}
           />
         </div>
