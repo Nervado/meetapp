@@ -9,8 +9,6 @@ import { Link } from 'react-router-dom';
 
 import { MdPlace, MdModeEdit, MdDelete, MdToday } from 'react-icons/md';
 
-import banner from '~/assets/meetup.png';
-
 import {
   cancelMeetupRequest,
   loadMeetupRequest,
@@ -52,7 +50,13 @@ export default function Details({ location }) {
         </div>
       </header>
       <Content>
-        <img src={banner} alt="banner" />
+        <img
+          src={
+            meetup.banner ? meetup.banner.url : 'https://picsum.photos/900/300'
+          }
+          alt="banner"
+        />
+
         <div className="description">{meetup.description}</div>
         <footer>
           <div className="data">
