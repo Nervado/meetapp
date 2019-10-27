@@ -7,8 +7,16 @@ export const Container = styled.View`
 
 export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: {padding: 30},
-})``;
+  contentContainerStyle: {padding: 0},
+})`
+  flex: 1;
+
+  align-self: stretch;
+
+  padding: 0 20px;
+
+  display: flex;
+`;
 
 export const SelectDate = styled.View`
   display: flex;
@@ -17,17 +25,20 @@ export const SelectDate = styled.View`
   justify-content: center;
   align-self: stretch;
   align-items: center;
-  background: #f94d6a;
 `;
 
 export const Date = styled.Text`
-  font-family: Helvetica;
+  font-family: 'Roboto';
   font-size: 20px;
   font-weight: bold;
   color: #fff;
-  background: #456788;
+  text-align: center;
 `;
 
-export const Back = styled.View``;
+export const Back = styled.View`
+  padding-right: 10px;
+`;
 
-export const Forward = styled.View``;
+export const Forward = styled.View`
+  margin-left: 10px;
+`;

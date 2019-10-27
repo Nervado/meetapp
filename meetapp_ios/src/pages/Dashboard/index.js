@@ -7,10 +7,21 @@ import api from '~/services/api';
 
 import Background from '~/components/Background';
 import Header from '~/components/Header';
-
 import Meetup from '~/components/Meetup';
 
 import {Container, SelectDate, Date, Back, Forward, List} from './styles';
+
+const meetup = {
+  title: 'Meetup de React Native',
+  description: 'Vai ficar foda',
+  organizer: 'Organizador: O super fodão',
+  local: 'Minha casa Porra',
+  date: '25 de Maio as 13h',
+  banner: {url: 'https://picsum.photos/900/300'},
+  cancelable: false,
+};
+
+const meetups = [meetup, meetup, meetup, meetup];
 
 function Dashboard({isFocused}) {
   const [appointments, setAppointments] = useState([]);
@@ -47,13 +58,14 @@ function Dashboard({isFocused}) {
           <Back>
             <Icon name="chevron-left" size={33} color="#fff" />
           </Back>
-          <Date>24 de Novembro</Date>
+          <Date>25 de Maio</Date>
           <Forward>
             <Icon name="chevron-right" size={33} color="#fff" />
           </Forward>
         </SelectDate>
+
         <List
-          data={appointments}
+          data={meetups}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
             <Meetup onCancel={() => handleCancel(item.id)} data={item} />
@@ -73,3 +85,12 @@ Dashboard.navigationOptions = {
 };
 
 export default withNavigationFocus(Dashboard);
+
+/**
+ *
+ * data={appointments}
+          keyExtractor={item => String(item.id)}
+          renderItem={({item}) => (
+            <Meetup onCancel={() => handleCancel(item.id)} data={item} />
+          )}
+ */
