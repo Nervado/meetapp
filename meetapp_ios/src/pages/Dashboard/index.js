@@ -12,10 +12,10 @@ import Meetup from '~/components/Meetup';
 import {Container, SelectDate, Date, Back, Forward, List} from './styles';
 
 const meetup = {
-  title: 'Meetup de React Native',
+  title: 'Encontro sobre a natureza',
   description: 'Vai ficar foda',
-  organizer: 'Organizador: O super fodão',
-  local: 'Minha casa Porra',
+  organizer: 'Organizador: Marcos Paulo',
+  local: 'Rua das Orquideas, 189',
   date: '25 de Maio as 13h',
   banner: {url: 'https://picsum.photos/900/300'},
   cancelable: false,
@@ -68,7 +68,11 @@ function Dashboard({isFocused}) {
           data={meetups}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
-            <Meetup onCancel={() => handleCancel(item.id)} data={item} />
+            <Meetup
+              onCancel={() => handleCancel(item.id)}
+              data={item}
+              buttonText="Realizar Inscrição"
+            />
           )}
         />
       </Container>
@@ -85,12 +89,3 @@ Dashboard.navigationOptions = {
 };
 
 export default withNavigationFocus(Dashboard);
-
-/**
- *
- * data={appointments}
-          keyExtractor={item => String(item.id)}
-          renderItem={({item}) => (
-            <Meetup onCancel={() => handleCancel(item.id)} data={item} />
-          )}
- */

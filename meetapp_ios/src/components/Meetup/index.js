@@ -18,7 +18,7 @@ import {
   StyledText,
 } from './styles';
 
-export default function Meetup({data, onCancel}) {
+export default function Meetup({data, onCancel, buttonText}) {
   /*
   const dateParsed = useMemo(() => {
     return formatRelative(parseISO(data.date), new Date(), {
@@ -53,7 +53,7 @@ export default function Meetup({data, onCancel}) {
             <StyledText> {data.organizer}</StyledText>
           </Name>
           <SubscriptionButton onPress={onCancel}>
-            Realizar Inscrição
+            {buttonText}
           </SubscriptionButton>
         </Info>
       </Left>
