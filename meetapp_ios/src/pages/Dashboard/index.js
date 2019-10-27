@@ -6,9 +6,11 @@ import {withNavigationFocus} from 'react-navigation';
 import api from '~/services/api';
 
 import Background from '~/components/Background';
+import Header from '~/components/Header';
+
 import Meetup from '~/components/Meetup';
 
-import {Container, Title, List} from './styles';
+import {Container, SelectDate, Date, Back, Forward, List} from './styles';
 
 function Dashboard({isFocused}) {
   const [appointments, setAppointments] = useState([]);
@@ -18,12 +20,13 @@ function Dashboard({isFocused}) {
 
     setAppointments(response.data);
   }
-
+  /*
   useEffect(() => {
     if (isFocused) {
       loadAppointments();
     }
   }, [isFocused]);
+  */
 
   async function handleCancel(id) {
     const response = await api.delete(`appointments/${id}`);
@@ -39,7 +42,16 @@ function Dashboard({isFocused}) {
   return (
     <Background>
       <Container>
-        <Title>Agendamentos</Title>
+        <Header />
+        <SelectDate>
+          <Back>
+            <Icon name="chevron-left" size={33} color="#fff" />
+          </Back>
+          <Date>24 de Novembro</Date>
+          <Forward>
+            <Icon name="chevron-right" size={33} color="#fff" />
+          </Forward>
+        </SelectDate>
         <List
           data={appointments}
           keyExtractor={item => String(item.id)}
@@ -53,7 +65,7 @@ function Dashboard({isFocused}) {
 }
 
 Dashboard.navigationOptions = {
-  tabBarLabel: 'Agendamentos',
+  tabBarLabel: 'Meetups',
 
   tabBarIcon: ({tintColor}) => (
     <Icon name="format-list-bulleted" size={20} color={tintColor} />

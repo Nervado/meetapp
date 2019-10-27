@@ -4,10 +4,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Background from '~/components/Background';
+import Header from '~/components/Header';
 
 import {
   Container,
-  Title,
   Form,
   FormInput,
   Separator,
@@ -58,10 +58,9 @@ export default function Profile() {
   return (
     <Background>
       <Container>
-        <Title>Meu perfil</Title>
+        <Header />
         <Form>
           <FormInput
-            icon="person-outline"
             autoCorrect={false}
             autoCapitalize="none"
             placeholder="Nome completo"
@@ -71,7 +70,6 @@ export default function Profile() {
             value={name}
           />
           <FormInput
-            icon="mail-outline"
             keyboardType="email-address"
             autoCorrect={false}
             autoCapitalize="none"
@@ -84,7 +82,6 @@ export default function Profile() {
           />
           <Separator />
           <FormInput
-            icon="lock-outline"
             secureTextEntry
             placeholder="Sua senha atual "
             ref={oldPasswordRef}
@@ -94,7 +91,6 @@ export default function Profile() {
             value={oldPassword}
           />
           <FormInput
-            icon="lock-outline"
             secureTextEntry
             placeholder="Sua nova senha"
             ref={passwordRef}
@@ -104,7 +100,6 @@ export default function Profile() {
             value={password}
           />
           <FormInput
-            icon="lock-outline"
             secureTextEntry
             placeholder="Confirme sua senha"
             ref={confirmPasswordRef}
@@ -113,8 +108,8 @@ export default function Profile() {
             onChangeText={setConfirmPassword}
             value={confirmPassword}
           />
-          <SubmitButton onPress={handleSubmit}>Atualizar perfil</SubmitButton>
-          <Logout onPress={handleLogout}>Sair do goBarber</Logout>
+          <SubmitButton onPress={handleSubmit}>Salvar perfil</SubmitButton>
+          <Logout onPress={handleLogout}>Sair do Meetapp</Logout>
         </Form>
       </Container>
     </Background>

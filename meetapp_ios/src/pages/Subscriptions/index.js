@@ -4,14 +4,18 @@ import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Background from '~/components/Background';
-// import { Container } from './styles';
+import Header from '~/components/Header';
+import {Container} from './styles';
 
 export default function Subscriptions() {
   return (
     <Background>
-      <View>
-        <Text>Subscriptions</Text>
-      </View>
+      <Container>
+        <Header />
+        <View>
+          <Text>Subscriptions</Text>
+        </View>
+      </Container>
     </Background>
   );
 }
