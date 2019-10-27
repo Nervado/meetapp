@@ -17,14 +17,6 @@ export function* signIn({payload}) {
 
     const {token, user} = response.data;
 
-    if (user.provider) {
-      Alert.alert(
-        'Erro no login',
-        'O usuário não pode ser prestador de serviços',
-      );
-      return;
-    }
-
     api.defaults.headers.Authorization = `Bearer ${token}`;
     yield put(signInSuccess(token, user));
 
@@ -44,16 +36,13 @@ export function* signUp({payload}) {
       name,
       email,
       password,
-      // provider: true,
     });
-
-    // history.push('/');
   } catch (err) {
     Alert.alert('Falha no cadastro', ' verique seus dados!');
     yield put(signFailure());
   }
 }
-// nao precisa usar o * pois nao é assincrona
+
 export function setToken({payload}) {
   if (!payload) return;
   const {token} = payload.auth;

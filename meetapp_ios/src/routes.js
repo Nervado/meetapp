@@ -29,9 +29,9 @@ export default (isSigned = false) =>
         }),
         App: createBottomTabNavigator(
           {
-            Dashboard,
-            Subscriptions,
-            Profile,
+            Meetups: Dashboard,
+            Inscrições: Subscriptions,
+            Perfil: Profile,
           },
           {
             resetOnBlur: true,
@@ -40,7 +40,7 @@ export default (isSigned = false) =>
               activeTintColor: '#FFF',
               inactiveTintColor: 'rgba(255,255,255,0.6)',
               style: {
-                backgroundColor: '#8d41a8',
+                backgroundColor: '#2b1a2f',
               },
             },
           },
