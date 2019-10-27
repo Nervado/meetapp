@@ -27,7 +27,7 @@ export const SelectDate = styled.View`
   align-items: center;
 `;
 
-export const Date = styled.Text`
+export const Time = styled.Text`
   font-family: 'Roboto';
   font-size: 20px;
   font-weight: bold;
@@ -35,10 +35,10 @@ export const Date = styled.Text`
   text-align: center;
 `;
 
-export const Back = styled.View`
+export const Back = styled.TouchableOpacity`
   padding-right: 10px;
 `;
 
-export const Forward = styled.View`
+export const Forward = styled.TouchableOpacity`
   margin-left: 10px;
 `;

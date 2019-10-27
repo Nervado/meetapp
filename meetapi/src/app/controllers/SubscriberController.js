@@ -25,7 +25,7 @@ class SubscriberController {
     if (req.userId === meetup.organizer_id) {
       return res
         .status(400)
-        .json({ error: 'usuário é organizador deste meetup' });
+        .json({ error: 'O usuário é organizador deste meetup' });
     }
 
     // O usuário não pode se inscrever em meetups que já aconteceram.

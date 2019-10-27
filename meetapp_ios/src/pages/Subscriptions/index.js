@@ -11,26 +11,26 @@ import Meetup from '~/components/Meetup';
 
 import {Container, List} from './styles';
 
-const meetup = {
-  title: 'Meetup de React Native',
-  description: 'Vai ficar foda',
-  organizer: 'Organizador: O super fodão',
-  local: 'Minha casa Porra',
-  date: '25 de Maio as 13h',
-  banner: {url: 'https://picsum.photos/900/300'},
-  cancelable: false,
-};
-
-const meetups = [meetup, meetup, meetup, meetup];
-
 function Subscriptions({isFocused}) {
-  const [appointments, setAppointments] = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
+
+  async function loadSubscriptions() {
+    const response = await api.get(`meetups?date=${queryDate}&page=1`);
+
+    setSubscriptions(response.data);
+  }
+
+  useEffect(() => {
+    if (isFocused) {
+      loadMeetups();
+    }
+  }, [isFocused]);
 
   async function handleCancel(id) {
-    const response = await api.delete(`appointments/${id}`);
+    const response = await api.delete(`subscriptions/${id}`);
 
-    setAppointments(
-      appointments.map(appointment =>
+    setSubscriptions(
+      subscriptions.map(appointment =>
         appointment.id === id
           ? {...appointment, canceled_at: response.data.canceled_at}
           : appointment,
@@ -43,7 +43,7 @@ function Subscriptions({isFocused}) {
         <Header />
 
         <List
-          data={meetups}
+          data={subscriptions}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
             <Meetup

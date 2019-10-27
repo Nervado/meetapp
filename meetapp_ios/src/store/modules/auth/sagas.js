@@ -37,6 +37,7 @@ export function* signUp({payload}) {
       email,
       password,
     });
+    Alert.alert('Bem vindo ao Meetup!');
   } catch (err) {
     Alert.alert('Falha no cadastro', ' verique seus dados!');
     yield put(signFailure());

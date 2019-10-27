@@ -1,7 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {withNavigationFocus} from 'react-navigation';
+import {Alert} from 'react-native';
+
+import {format, subDays, addDays} from 'date-fns';
+
+import pt from 'date-fns/locale/pt';
 
 import api from '~/services/api';
 
@@ -9,58 +15,76 @@ import Background from '~/components/Background';
 import Header from '~/components/Header';
 import Meetup from '~/components/Meetup';
 
-import {Container, SelectDate, Date, Back, Forward, List} from './styles';
-
-const meetup = {
-  title: 'Encontro sobre a natureza',
-  description: 'Vai ficar foda',
-  organizer: 'Organizador: Marcos Paulo',
-  local: 'Rua das Orquideas, 189',
-  date: '25 de Maio as 13h',
-  banner: {url: 'https://picsum.photos/900/300'},
-  cancelable: false,
-};
-
-const meetups = [meetup, meetup, meetup, meetup];
+import {Container, SelectDate, Time, Back, Forward, List} from './styles';
 
 function Dashboard({isFocused}) {
-  const [appointments, setAppointments] = useState([]);
+  const [date, setDate] = useState(new Date());
+  const [meetups, setMeetups] = useState([]);
 
-  async function loadAppointments() {
-    const response = await api.get('appointments');
+  const queryDate = useMemo(() => format(date, "yyyy'-'MM'-'dd"));
 
-    setAppointments(response.data);
+  async function loadMeetups() {
+    const response = await api.get(`meetups?date=${queryDate}&page=1`);
+
+    setMeetups(response.data);
   }
-  /*
+
   useEffect(() => {
     if (isFocused) {
-      loadAppointments();
+      loadMeetups();
     }
-  }, [isFocused]);
-  */
+  }, [isFocused, date]);
 
-  async function handleCancel(id) {
-    const response = await api.delete(`appointments/${id}`);
+  const dateFormatted = useMemo(
+    () => format(date, "d 'de' MMMM", {locale: pt}),
+    [date],
+  );
 
-    setAppointments(
-      appointments.map(appointment =>
-        appointment.id === id
-          ? {...appointment, canceled_at: response.data.canceled_at}
-          : appointment,
-      ),
-    );
+  function handlePrevDay() {
+    setDate(subDays(date, 1));
   }
+
+  function handleNextDay() {
+    setDate(addDays(date, 1));
+    console.tron.log(queryDate);
+  }
+
+  async function handleSubscription(id) {
+    try {
+      const response = await api.post(`subscriptions/${id}`);
+      setMeetups(
+        meetups.map(meet =>
+          meet.id === id
+            ? {...meet, canceled_at: response.data.canceled_at}
+            : meet,
+        ),
+      );
+    } catch (error) {
+      Alert.alert(error.response.data.error);
+    }
+  }
+
   return (
     <Background>
       <Container>
         <Header />
         <SelectDate>
           <Back>
-            <Icon name="chevron-left" size={33} color="#fff" />
+            <Icon
+              onPress={handlePrevDay}
+              name="chevron-left"
+              size={33}
+              color="#fff"
+            />
           </Back>
-          <Date>25 de Maio</Date>
+          <Time>{dateFormatted}</Time>
           <Forward>
-            <Icon name="chevron-right" size={33} color="#fff" />
+            <Icon
+              onPress={handleNextDay}
+              name="chevron-right"
+              size={33}
+              color="#fff"
+            />
           </Forward>
         </SelectDate>
 
@@ -69,7 +93,7 @@ function Dashboard({isFocused}) {
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
             <Meetup
-              onCancel={() => handleCancel(item.id)}
+              onCancel={() => handleSubscription(item.id)}
               data={item}
               buttonText="Realizar Inscrição"
               red={false}

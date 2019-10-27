@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, {useMemo} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {parseISO, formatRelative} from 'date-fns';
+
+import {format, parseISO} from 'date-fns';
+
 import pt from 'date-fns/locale/pt';
-import {TouchableOpacity, Text} from 'react-native';
 
 import {
   Container,
@@ -19,14 +20,10 @@ import {
 } from './styles';
 
 export default function Meetup({data, onCancel, buttonText, red}) {
-  /*
-  const dateParsed = useMemo(() => {
-    return formatRelative(parseISO(data.date), new Date(), {
-      locale: pt,
-      addSuffix: true,
-    });
-  }, [data.date]);
-*/
+  const dateFormatted = useMemo(
+    () => format(parseISO(data.date), "d 'de' MMMM", {locale: pt}),
+    [data.date],
+  );
   return (
     <Container>
       <Left>
@@ -41,7 +38,7 @@ export default function Meetup({data, onCancel, buttonText, red}) {
           <Title>{data.title}</Title>
           <Time>
             <Icon name="event" size={17} color="#999999" />
-            <StyledText> {data.date}</StyledText>
+            <StyledText> {dateFormatted}</StyledText>
           </Time>
 
           <Local>

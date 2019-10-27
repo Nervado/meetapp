@@ -30,7 +30,6 @@ class MeetController {
         {
           model: File,
           as: 'banner',
-          attributes: ['id', 'name', 'url'],
         },
         {
           model: User,

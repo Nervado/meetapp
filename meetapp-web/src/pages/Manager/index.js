@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { parseISO } from 'date-fns';
+import { parseISO, subDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import { MdAddCircleOutline } from 'react-icons/md';
@@ -59,8 +59,11 @@ export default function Manager() {
             name="date"
             placeholder="Data do Meetup"
             showTimeSelect
-            dateFormat="dd 'de' MMMM', às ' HH:mm'h'"
+            dateFormat="dd 'de' MMMM', às ' HH'h'"
+            showTime={{ format: 'HH' }}
             placeholderText="Data do meetup"
+            minDate={subDays(new Date(), 0)}
+            timeIntervals={60}
             locale={pt}
             selected={newdate}
             onChange={date => setNewDate(date)}
