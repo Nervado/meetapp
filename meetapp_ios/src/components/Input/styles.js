@@ -8,14 +8,14 @@ export const Container = styled.View`
 
   flex-direction: row;
   align-items: center;
+  margin-bottom: 10px;
 `;
 
 export const TInput = styled.TextInput.attrs({
-  placeholderTextColor: 'rgba(255, 255, 255, 0.3)',
+  placeholderTextColor: 'rgba(255, 255, 255, 0.5)',
 })`
   flex: 1;
   font-size: 18px;
-  font-weight: bold;
   margin-left: 10px;
   color: #fff;
   font-family: Helvetica;
