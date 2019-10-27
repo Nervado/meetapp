@@ -1,5 +1,3 @@
-// import React from 'react';
-
 import {
   createAppContainer,
   createSwitchNavigator,
@@ -14,11 +12,7 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import Subscriptions from './pages/Subscriptions';
 import Profile from './pages/Profile';
-/*
-import SelectProvider from '~/pages/New/SelectProvider';
-import SelectDateTime from '~/pages/New/SelectDateTime';
-import Confirm from '~/pages/New/Confirm';
-*/
+
 export default (isSigned = false) =>
   createAppContainer(
     createSwitchNavigator(
@@ -29,9 +23,9 @@ export default (isSigned = false) =>
         }),
         App: createBottomTabNavigator(
           {
-            Meetups: Dashboard,
-            Inscrições: Subscriptions,
-            Perfil: Profile,
+            Dashboard,
+            Subscriptions,
+            Profile,
           },
           {
             resetOnBlur: true,
