@@ -34,6 +34,12 @@ target 'meetapp_ios' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
+
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+
   target 'meetapp_iosTests' do
     inherit! :search_paths
     # Pods for testing
