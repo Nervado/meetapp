@@ -18,7 +18,7 @@ import {
   StyledText,
 } from './styles';
 
-export default function Meetup({data, onCancel, buttonText}) {
+export default function Meetup({data, onCancel, buttonText, red}) {
   /*
   const dateParsed = useMemo(() => {
     return formatRelative(parseISO(data.date), new Date(), {
@@ -52,7 +52,7 @@ export default function Meetup({data, onCancel, buttonText}) {
             <Icon name="person" size={17} color="#999999" />
             <StyledText> {data.organizer}</StyledText>
           </Name>
-          <SubscriptionButton onPress={onCancel}>
+          <SubscriptionButton onPress={onCancel} red={red}>
             {buttonText}
           </SubscriptionButton>
         </Info>

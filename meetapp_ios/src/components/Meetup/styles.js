@@ -66,6 +66,7 @@ export const SubscriptionButton = styled(Button)`
   height: 40px;
   width: auto;
   margin-top: 14px;
+  background: ${props => (props.red ? '#D44059' : '#f94d6a')};
 `;
 
 export const StyledText = styled.Text`

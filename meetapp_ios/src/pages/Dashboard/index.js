@@ -72,6 +72,7 @@ function Dashboard({isFocused}) {
               onCancel={() => handleCancel(item.id)}
               data={item}
               buttonText="Realizar Inscrição"
+              red={false}
             />
           )}
         />

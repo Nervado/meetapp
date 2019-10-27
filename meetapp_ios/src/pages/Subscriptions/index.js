@@ -50,6 +50,7 @@ function Subscriptions({isFocused}) {
               onCancel={() => handleCancel(item.id)}
               data={item}
               buttonText="Cancelar Inscrição"
+              red
             />
           )}
         />
