@@ -46,19 +46,17 @@ function Dashboard({isFocused}) {
 
   function handleNextDay() {
     setDate(addDays(date, 1));
-    console.tron.log(queryDate);
   }
 
   async function handleSubscription(id) {
     try {
-      const response = await api.post(`subscriptions/${id}`);
+      await api.post(`subscriptions/${id}`);
       setMeetups(
         meetups.map(meet =>
-          meet.id === id
-            ? {...meet, canceled_at: response.data.canceled_at}
-            : meet,
+          meet.id === id ? {...meet, subscribed: true} : meet,
         ),
       );
+      Alert.alert('Inscrição realizada!');
     } catch (error) {
       Alert.alert(error.response.data.error);
     }
@@ -97,6 +95,7 @@ function Dashboard({isFocused}) {
               data={item}
               buttonText="Realizar Inscrição"
               red={false}
+              subscribed={item.subscribed}
             />
           )}
         />

@@ -19,34 +19,42 @@ import {
   StyledText,
 } from './styles';
 
-export default function Meetup({data, onCancel, buttonText, red, subscribed}) {
+export default function Subscription({
+  data,
+  onCancel,
+  buttonText,
+  red,
+  subscribed,
+}) {
+  const {title, local, date, user, banner} = data.meet;
+
+  console.tron.log(data.meet);
+
   const dateFormatted = useMemo(
-    () => format(parseISO(data.date), "d 'de' MMMM", {locale: pt}),
-    [data.date],
+    () => format(parseISO(date), "d 'de' MMMM", {locale: pt}),
+    [date],
   );
   return (
     <Container>
       <Left>
         <Banner
           source={{
-            uri: data.banner
-              ? data.banner.url
-              : 'https://picsum.photos/470/150',
+            uri: banner ? banner.url : 'https://picsum.photos/470/150',
           }}
         />
         <Info>
-          <Title>{data.title}</Title>
+          <Title>{title}</Title>
           <Time>
             <Icon name="event" size={17} color="#999999" />
             <StyledText> {dateFormatted}</StyledText>
           </Time>
           <Local>
             <Icon name="place" size={17} color="#999999" />
-            <StyledText> {data.local}</StyledText>
+            <StyledText> {local}</StyledText>
           </Local>
           <Name>
             <Icon name="person" size={17} color="#999999" />
-            <StyledText> {data.user.name}</StyledText>
+            <StyledText> {user.name}</StyledText>
           </Name>
 
           <SubscriptionButton onPress={onCancel} red={red} show={subscribed}>

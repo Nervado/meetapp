@@ -2,12 +2,13 @@
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {withNavigationFocus} from 'react-navigation';
+import {Alert} from 'react-native';
 
 import api from '~/services/api';
 
 import Background from '~/components/Background';
 import Header from '~/components/Header';
-import Meetup from '~/components/Meetup';
+import Subscription from '~/components/Subscription';
 
 import {Container, List} from './styles';
 
@@ -15,27 +16,31 @@ function Subscriptions({isFocused}) {
   const [subscriptions, setSubscriptions] = useState([]);
 
   async function loadSubscriptions() {
-    const response = await api.get(`meetups?date=${queryDate}&page=1`);
+    const response = await api.get(`subscriptions`);
 
     setSubscriptions(response.data);
   }
 
   useEffect(() => {
     if (isFocused) {
-      loadMeetups();
+      loadSubscriptions();
     }
   }, [isFocused]);
 
   async function handleCancel(id) {
-    const response = await api.delete(`subscriptions/${id}`);
-
-    setSubscriptions(
-      subscriptions.map(appointment =>
-        appointment.id === id
-          ? {...appointment, canceled_at: response.data.canceled_at}
-          : appointment,
-      ),
-    );
+    try {
+      const response = await api.delete(`subscriptions/${id}`);
+      setSubscriptions(
+        subscriptions.map(appointment =>
+          appointment.id === id
+            ? {...appointment, canceled_at: response.data.canceled_at}
+            : appointment,
+        ),
+      );
+      Alert.alert('Inscrição Cancelada!');
+    } catch (error) {
+      Alert.alert(error.response.data.error);
+    }
   }
   return (
     <Background>
@@ -46,7 +51,7 @@ function Subscriptions({isFocused}) {
           data={subscriptions}
           keyExtractor={item => String(item.id)}
           renderItem={({item}) => (
-            <Meetup
+            <Subscription
               onCancel={() => handleCancel(item.id)}
               data={item}
               buttonText="Cancelar Inscrição"
