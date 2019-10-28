@@ -29,12 +29,10 @@ function Subscriptions({isFocused}) {
 
   async function handleCancel(id) {
     try {
-      const response = await api.delete(`subscriptions/${id}`);
+      await api.delete(`subscriptions/${id}`);
       setSubscriptions(
-        subscriptions.map(appointment =>
-          appointment.id === id
-            ? {...appointment, canceled_at: response.data.canceled_at}
-            : appointment,
+        subscriptions.map(subs =>
+          subs.id === id ? {...subs, canceled: true} : subs,
         ),
       );
       Alert.alert('Inscrição Cancelada!');
@@ -56,6 +54,7 @@ function Subscriptions({isFocused}) {
               data={item}
               buttonText="Cancelar Inscrição"
               red
+              canceled={item.canceled}
             />
           )}
         />

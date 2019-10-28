@@ -21,7 +21,8 @@ import {
 
 export default function Meetup({data, onCancel, buttonText, red, subscribed}) {
   const dateFormatted = useMemo(
-    () => format(parseISO(data.date), "d 'de' MMMM", {locale: pt}),
+    () =>
+      format(parseISO(data.date), "dd 'de' MMMM', às ' HH'h'", {locale: pt}),
     [data.date],
   );
   return (

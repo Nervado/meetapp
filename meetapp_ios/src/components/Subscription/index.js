@@ -24,14 +24,14 @@ export default function Subscription({
   onCancel,
   buttonText,
   red,
-  subscribed,
+  canceled,
 }) {
   const {title, local, date, user, banner} = data.meet;
 
   console.tron.log(data.meet);
 
   const dateFormatted = useMemo(
-    () => format(parseISO(date), "d 'de' MMMM", {locale: pt}),
+    () => format(parseISO(date), "dd 'de' MMMM', às ' HH'h'", {locale: pt}),
     [date],
   );
   return (
@@ -57,7 +57,7 @@ export default function Subscription({
             <StyledText> {user.name}</StyledText>
           </Name>
 
-          <SubscriptionButton onPress={onCancel} red={red} show={subscribed}>
+          <SubscriptionButton onPress={onCancel} red={red} show={canceled}>
             {buttonText}
           </SubscriptionButton>
         </Info>
