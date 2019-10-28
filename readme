@@ -1,0 +1,42 @@
+// Clonar todo o repositorio meetapp
+
+// Iniciar 2 Containers DOCKER com Redis e postgres com redirecionamenbto de portas padrão
+
+docker run --name modulotestes -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+
+docker run --name redis -p 6379:6379 -d -t redis:alpine
+
+// Criar uma database no postgress como nome "meetapp""
+
+// entrar em cada uma das pastas e rodar o comando yarn
+yarn
+// dentro da pasta projeto meetapi rodar o comando
+yarn sequelize db:migrate
+
+// configurar o arquivo .env.example de acordo com o as infornmaçoes necessarias
+// para uso do mail trap, da conexao ao postgres e ao redis
+
+// iniciar o backend na mesma pasta com o comando yarn dev,
+yarn dev
+// iniciar a fila de email com o comando
+yarn queue
+// entrar na pasta meetapp-web e rodar o comando yarn
+yarn
+// iniciar o front-end rondando o comanbdo
+yarn start
+// entrar na pasta meetapp_ios e rodar o comando
+yarn
+// iniciar o mobile usando o comando
+
+react-native run-meetapp_ios
+
+// reiniciar o metro-bundler se necessário com
+yarn start
+
+obs.: Algumas dependencias tornaram necessário alterar o modo de criacao de build
+no Xcode para o "modo legacy" conforme discutido em:
+
+https://github.com/facebook/react-native/issues/20492
+
+
+docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
